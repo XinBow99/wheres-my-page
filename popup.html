@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<style>
+  body { width: 300px; margin: 0; font: 13px/1.5 -apple-system, "Segoe UI", "Noto Sans TC", "PingFang TC", sans-serif; color: #1d2433; }
+  header { display: flex; align-items: center; gap: 8px; padding: 12px 14px; border-bottom: 1px solid #e3e6ec; }
+  header img { width: 22px; height: 22px; }
+  section { padding: 10px 14px; border-bottom: 1px solid #e3e6ec; }
+  input[type=search] { width: 100%; box-sizing: border-box; font: inherit; padding: 7px 10px; border: 1px solid #e3e6ec; border-radius: 8px; }
+  .row { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin: 6px 0; }
+  button { font: inherit; padding: 5px 10px; border-radius: 6px; border: 1px solid #2f5bd3; background: #2f5bd3; color: #fff; cursor: pointer; }
+  button.ghost { background: #fff; color: #2f5bd3; }
+  .muted { color: #6b7385; font-size: 12px; }
+  .ok { color: #1f8a5b; } .err { color: #d93a3a; }
+</style>
+</head>
+<body>
+<header><img src="icons/icon48.png" alt=""><b>語意回憶</b></header>
+<section>
+  <form id="f"><input id="q" type="search" placeholder="搜尋你讀過的網頁…" autofocus></form>
+</section>
+<section>
+  <div class="row"><span id="pageState" class="muted">檢查目前頁面…</span><button id="indexBtn" class="ghost">索引此頁</button></div>
+  <div class="row"><span class="muted">只要其中一段？</span><button id="pickBtn" class="ghost">📌 選取區塊索引</button></div>
+  <div class="row"><label for="blockMode">區塊索引</label>
+    <select id="blockMode">
+      <option value="off">關閉</option>
+      <option value="manual">點了才選</option>
+      <option value="hints">自動標出可索引區塊</option>
+    </select></div>
+  <div class="row"><label for="enabled">自動索引</label><input type="checkbox" id="enabled"></div>
+  <div class="row"><label for="autoImages">自動索引時一併索引圖片</label><input type="checkbox" id="autoImages"></div>
+</section>
+<section>
+  <div id="stats" class="muted">讀取中…</div>
+  <div class="row" style="margin-top:6px"><span class="muted">網址列：<b>ss</b> + 空白 + 查詢</span><button id="openBtn" class="ghost">完整搜尋頁</button></div>
+</section>
+<script type="module" src="popup.js"></script>
+</body>
+</html>

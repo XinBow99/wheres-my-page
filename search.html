@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<title>語意回憶</title>
+<link rel="icon" href="icons/icon32.png">
+<link rel="stylesheet" href="search.css">
+</head>
+<body>
+<header>
+  <div class="top">
+    <img src="icons/icon48.png" alt="">
+    <div class="searchbox">
+      <input id="q" type="search" placeholder="用一句話描述你記得的內容；留空＋點分類＝瀏覽該分類" autofocus autocomplete="off">
+    </div>
+    <select id="since">
+      <option value="0">全部時間</option>
+      <option value="1">24 小時</option>
+      <option value="7">7 天</option>
+      <option value="30">30 天</option>
+      <option value="90">90 天</option>
+    </select>
+    <select id="domain"><option value="">所有網站</option></select>
+  </div>
+  <nav id="chips" class="chips" aria-label="分類"></nav>
+</header>
+
+<main>
+  <div id="simbar" class="simbar" hidden>
+    <label>文字相似度 ≥ <input type="range" id="minSim" min="0" max="0.9" step="0.01"> <b id="minSimVal">0.00</b></label>
+    <span id="simInfo" class="muted"></span>
+  </div>
+  <div id="meta" class="meta"></div>
+  <section id="imgSection" hidden>
+    <h3 class="sect">🖼 圖片 <span class="muted">（Text-Vision 440M，相似度與文字結果分開排序）</span>
+      <label class="imgsim">相似度 ≥ <input type="range" id="imgMinSim" min="0" max="0.9" step="0.01"> <b id="imgMinSimVal">0.00</b></label>
+      <span id="imgSimInfo" class="muted"></span></h3>
+    <div id="images" class="imggrid"></div>
+  </section>
+  <ol id="results"></ol>
+  <div id="empty" class="empty" hidden>
+    <h2>索引還是空的</h2>
+    <p>正常瀏覽就好：頁面停留超過設定秒數就會自動索引（<kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>S</kbd> 立即索引目前頁面）。</p>
+    <p>或先匯入過去的瀏覽紀錄標題，馬上就能搜尋：</p>
+    <button class="import" data-days="30">匯入最近 30 天紀錄</button>
+  </div>
+</main>
+
+<details id="catPanel" class="panel">
+  <summary>管理分類</summary>
+  <div class="box">
+    <p class="muted">
+      自動分類會比對「頁面內容」和「分類名稱＋描述」。描述寫得越具體越準；
+      你手動加上或移除的分類會被當成範例，之後的自動分類會跟著學。
+    </p>
+    <div id="catList"></div>
+    <form id="catNew" class="catrow new">
+      <input type="color" name="color" value="#2f5bd3" title="顏色">
+      <input name="name" placeholder="新分類名稱，例如「Minecraft 模組」" required maxlength="24">
+      <input name="description" placeholder="描述：會出現哪些內容、關鍵字（可留空）" maxlength="200">
+      <button type="submit">新增分類</button>
+    </form>
+    <div id="catMsg" class="muted"></div>
+  </div>
+</details>
+
+<details id="settings" class="panel">
+  <summary>設定與索引管理</summary>
+  <div class="grid">
+    <label>啟用自動索引 <input type="checkbox" id="enabled"></label>
+    <label>頁面可見幾秒後索引 <input type="number" id="minDwellSec" min="3" max="600" step="1"></label>
+    <label>區塊索引
+      <select id="blockMode">
+        <option value="off">關閉</option>
+        <option value="manual">點了才選</option>
+        <option value="hints">自動標出可索引區塊</option>
+      </select>
+    </label>
+    <label>自動索引時一併索引圖片 <input type="checkbox" id="autoImages"></label>
+    <div class="muted">開啟後，頁面自動索引完成時也會索引內文裡的圖片（≥ 200×150、每頁最多 8 張、只用原圖不截圖）。第一次會下載 Text-Vision 440M 模型。</div>
+    <label>在網頁右下角顯示索引狀態 <input type="checkbox" id="showBadge"></label>
+    <label>已隱藏圖示的網站 <input type="text" id="badgeHiddenDomains" placeholder="逗號分隔"></label>
+    <label class="full">自動分類門檻 <span><input type="range" id="tagMinScore" min="0.05" max="0.6" step="0.01"> <b id="tagMinScoreVal"></b></span></label>
+    <div class="full muted">圖片預設不自動索引（上方開關可開）；也可以用右鍵「索引這張圖片」、區塊選取或自動標出的 🖼 手動加入。
+    門檻越高越保守（未分類變多）；結果卡片上的「分類分數」可以看實際相似度來校準。</div>
+    <label>模型 <select id="model"></select></label>
+    <label class="full">不索引的網站（每行一個，支援 * 萬用字元，比對網域或網域+路徑）
+      <textarea id="denylist" rows="6"></textarea>
+    </label>
+    <div class="full row">
+      <button id="saveBtn">儲存設定</button>
+      <button class="import ghost" data-days="30">匯入 30 天紀錄標題</button>
+      <button class="import ghost" data-days="90">匯入 90 天</button>
+      <button id="clearBtn" class="danger">清空整個索引</button>
+      <span id="settingsMsg" class="muted"></span>
+    </div>
+    <div class="full muted" id="stats"></div>
+  </div>
+</details>
+
+<footer class="muted">
+  所有網頁內容與向量只存在這台電腦（IndexedDB）。網址列輸入 <kbd>ss</kbd> + 空白 也能直接搜尋；<kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>F</kbd> 開啟此頁。
+</footer>
+
+<script type="module" src="search.js"></script>
+</body>
+</html>

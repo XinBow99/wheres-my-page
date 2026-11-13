@@ -1,0 +1,79 @@
+{
+  "manifest_version": 3,
+  "name": "語意回憶：瀏覽紀錄語意搜尋",
+  "version": "0.5.0",
+  "description": "用自然語言搜尋你讀過的網頁。EmbeddingGemma-2 在本機建立索引，網頁內容不離開你的電腦。",
+  "minimum_chrome_version": "116",
+  "permissions": [
+    "offscreen",
+    "storage",
+    "history",
+    "tabs",
+    "contextMenus"
+  ],
+  "host_permissions": [
+    "https://huggingface.co/*",
+    "https://*.huggingface.co/*",
+    "https://*.hf.co/*",
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "picker.js",
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "omnibox": {
+    "keyword": "ss"
+  },
+  "commands": {
+    "open-search": {
+      "suggested_key": {
+        "default": "Alt+Shift+F"
+      },
+      "description": "開啟語意搜尋"
+    },
+    "index-page": {
+      "suggested_key": {
+        "default": "Alt+Shift+S"
+      },
+      "description": "立即索引目前頁面"
+    },
+    "pick-block": {
+      "suggested_key": {
+        "default": "Alt+Shift+E"
+      },
+      "description": "選取網頁區塊並索引"
+    }
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "語意回憶",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+  }
+}

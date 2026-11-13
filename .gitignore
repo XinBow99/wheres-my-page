@@ -1,0 +1,29 @@
+# Dependencies & build output
+node_modules/
+dist/
+coverage/
+*.tgz
+*.tsbuildinfo
+
+# MediaPipe runtime: installed from npm (@mediapipe/tasks-retrieval) and copied
+# into dist/ by the build. The root copies are PoC leftovers kept on disk only
+# until the refactor replaces them. Never commit.
+/lib/
+/wasm/
+*.wasm
+
+# Model weights: downloaded at runtime into the Cache API. Never commit.
+*.litertlm
+*.tflite
+*.task
+*.onnx
+*.safetensors
+*.gguf
+
+# Local / OS / editor
+.env
+.env.*
+*.log
+.DS_Store
+Thumbs.db
+.claude/settings.local.json
