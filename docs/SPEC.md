@@ -127,12 +127,17 @@ wheres-my-page/
 ├─ scripts/
 │  ├─ build.mjs                    esbuild 設定 + 複製 public/、MediaPipe wasm
 │  ├─ verify-dist.mjs              檢查 manifest 引用的檔案都存在、輸出大小
-│  └─ floor-guard.mjs              CONSTRAINTS.md 的 Floor 檢查
-├─ CONSTRAINTS.md、SPEC.md、README.md、CLAUDE.md
+│  └─ floor-guard.mjs              docs/CONSTRAINTS.md 的 Floor 檢查
+├─ docs/
+│  ├─ CONSTRAINTS.md               品質門檻（權威來源）
+│  ├─ SPEC.md                      本規格
+│  ├─ architecture.drawio          架構圖（執行環境 + 模組依賴）
+│  └─ tasks/                       plan.md、todo.md
+├─ README.md、CLAUDE.md
 └─ dist/                           （gitignored）
 ```
 
-模組依賴方向：見 `CONSTRAINTS.md`「模組依賴規則」，由 dependency-cruiser 強制。
+模組依賴方向：見 `docs/CONSTRAINTS.md`「模組依賴規則」，由 dependency-cruiser 強制。
 
 ### 與你指定目錄的差異
 你指定了 `background`、`offscreen`、`content`、`storage`、`ui`、`shared`。我**多加了 `src/core/`**：存放不依賴任何瀏覽器 API 的純演算法（切塊、token 估計、cosine、排序、分類規則、排除清單、狀態機）。分開的理由：
@@ -278,7 +283,7 @@ export function chunkText(text: string, options: ChunkOptions = {}): string[] {
 | 整合（DOM） | Vitest + happy-dom | `content/extractor`、`content/dwell_controller`、badge 狀態對應 | 不設門檻 |
 | 契約 | Vitest | 每種訊息：合法 payload 通過、缺欄位／型別錯誤回 `INVALID_MESSAGE`、timeout、retryable 語意 | 計入 shared |
 | 效能 | `vitest bench` | `VectorIndex.search` 在 2 萬段、256 維下的耗時（ratchet 基準） | ratchet |
-| 瀏覽器實測 | 真實 Chrome + DevTools | `CONSTRAINTS.md`「每個切片的手動驗收」五項 | 每個切片 |
+| 瀏覽器實測 | 真實 Chrome + DevTools | `docs/CONSTRAINTS.md`「每個切片的手動驗收」五項 | 每個切片 |
 
 **特性測試（characterization test）先行**：每個從 PoC 搬過來的純函式，先用 PoC 原始實作寫測試（尤其是中文切塊與 token 估計的邊界案例），再搬移與重構，確保行為沒變。
 
@@ -296,7 +301,7 @@ export function chunkText(text: string, options: ChunkOptions = {}): string[] {
   - 變更 IndexedDB schema、DB 名稱、Cache 名稱
   - 新增 manifest 權限或 `host_permissions`
   - 新增任何網路請求目的地
-  - 修改 `CONSTRAINTS.md` 的門檻
+  - 修改 `docs/CONSTRAINTS.md` 的門檻
   - 推送到 `origin`
 - **絕對不做**
   - 為了通過檢查而停用 lint、型別或測試
@@ -310,7 +315,7 @@ export function chunkText(text: string, options: ChunkOptions = {}): string[] {
 
 1. **功能等價**：README v0.5.0 的每項功能都能從 `dist/` 正常運作：自動索引、手動索引、區塊／片段、圖片、分類（自動／手動／原型學習）、相似度門檻、網域／時間篩選、omnibox `ss`、3 組快捷鍵、右鍵選單、歷史匯入。
 2. **資料相容**：v0.5.0 建立的 IndexedDB 升級後，不需重建索引即可搜尋。
-3. **PoC 檔案全部移除**，`CONSTRAINTS.md` 例外 W1 關閉。
+3. **PoC 檔案全部移除**，`docs/CONSTRAINTS.md` 例外 W1 關閉。
 4. **`npm run check:task` 全綠**；`src/` 中零抑制註解。
 5. **契約**：每則跨環境訊息都在 `RequestMap` 中定義；不合法訊息回 `INVALID_MESSAGE`；任何請求都不會無限等待。
 6. **Side Panel**：在 320px 寬度下可完整搜尋、篩選、移除結果，沒有水平捲軸。
@@ -356,9 +361,9 @@ export function chunkText(text: string, options: ChunkOptions = {}): string[] {
 
 | 文章的做法 | 在本專案中的落實 |
 |---|---|
-| 寫 agent 用的 steering 檔：慣例、標準、測試方式、如何瀏覽程式碼 | `CLAUDE.md`（入口）→ `CONSTRAINTS.md`（標準）→ `SPEC.md`（架構與契約）。每個 `src/*` 模組放一份簡短的 `README.md`，說明職責與對外介面。 |
+| 寫 agent 用的 steering 檔：慣例、標準、測試方式、如何瀏覽程式碼 | `CLAUDE.md`（入口）→ `docs/CONSTRAINTS.md`（標準）→ `docs/SPEC.md`（架構與契約）。每個 `src/*` 模組放一份簡短的 `README.md`，說明職責與對外介面。 |
 | 寫程式前先定義「完成」；複雜功能走 spec-driven | 本檔的 Success Criteria，以及 `/plan` 中每個任務的驗收條件。 |
-| 事先把工作拆成範圍清楚的任務，維持穩定的 backlog | `tasks/plan.md` + `tasks/todo.md`；每個任務 ≤ 5 個檔案，都附上驗證指令。 |
+| 事先把工作拆成範圍清楚的任務，維持穩定的 backlog | `docs/tasks/plan.md` + `docs/tasks/todo.md`；每個任務 ≤ 5 個檔案，都附上驗證指令。 |
 | **Shift testing left**：讓 agent 能在本機跑完所有測試並自我修正 | `npm run check:task` 必須在 90 秒內跑完全部檢查，agent 在交回工作前自己跑過。 |
 | 人工 review 從風格與命名轉向**介面定義與架構決策** | 風格完全交給 `gts`／`tsc` 自動處理。人工 review 只看：契約變更（`shared/messaging/contract.ts`）、依賴規則、IndexedDB schema、manifest 權限。這四類檔案的變更必須在 commit message 中獨立說明。 |
 | 第一、二週會比較慢 | 預期 Slice 0–2（工具鏈、純函式、契約）不會產生使用者看得到的變化，這是正常的。 |

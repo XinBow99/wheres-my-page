@@ -3,7 +3,7 @@
 Last reviewed: 2026-11-13 by XinBow99
 Status: **已確認**（2026-11-13）。表格中的指令在 Slice 0（工具鏈）中安裝並驗證；Slice 0 完成之前，Floor 以人工 review 執行。
 
-這份文件定義「可以合併」的最低標準。`CONSTRAINTS.md` 是唯一的權威來源；`package.json` 的 scripts 只是它的包裝，兩者不一致時以本檔為準。
+這份文件定義「可以合併」的最低標準。`docs/CONSTRAINTS.md` 是唯一的權威來源；`package.json` 的 scripts 只是它的包裝，兩者不一致時以本檔為準。
 
 ---
 

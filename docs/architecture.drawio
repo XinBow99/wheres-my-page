@@ -1,0 +1,220 @@
+<mxfile host="app.diagrams.net" agent="Claude Code" version="24.7.17">
+  <diagram id="runtime" name="1. 執行環境與訊息流">
+    <mxGraphModel dx="1400" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1720" pageHeight="1030" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="title" value="&lt;b&gt;Where&#39;s My Page? — 執行環境架構（Chrome MV3）&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot;&gt;所有推論與資料都在本機；唯一的網路請求是下載模型權重&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=middle;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="40" y="10" width="900" height="44" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ui" value="擴充功能頁面（src/ui/）・可用全部 chrome.*" style="swimlane;startSize=30;rounded=1;arcSize=4;html=1;whiteSpace=wrap;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="560" y="70" width="340" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="ui_sp" value="&lt;b&gt;Side Panel&lt;/b&gt;&lt;br&gt;sidepanel/&lt;br&gt;窄版搜尋" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#9673a6;fontSize=11;" vertex="1" parent="ui">
+          <mxGeometry x="10" y="40" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ui_popup" value="&lt;b&gt;Popup&lt;/b&gt;&lt;br&gt;popup/&lt;br&gt;狀態＋快速動作" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#9673a6;fontSize=11;" vertex="1" parent="ui">
+          <mxGeometry x="120" y="40" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ui_search" value="&lt;b&gt;完整搜尋頁&lt;/b&gt;&lt;br&gt;search/&lt;br&gt;寬版・設定・分類" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#9673a6;fontSize=11;" vertex="1" parent="ui">
+          <mxGeometry x="230" y="40" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ui_app" value="search_app ＋ components（h()、status_banner aria-live、design tokens）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f3ecf6;strokeColor=#9673a6;fontSize=11;" vertex="1" parent="ui">
+          <mxGeometry x="10" y="112" width="320" height="44" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cs" value="Content Script（每個分頁・isolated world・IIFE bundle）&lt;br&gt;&lt;font color=&quot;#b85450&quot;&gt;⚠ 不受信任：訊息一律驗證，不可觸發破壞性操作或任意 URL 請求&lt;/font&gt;" style="swimlane;startSize=44;rounded=1;arcSize=4;html=1;whiteSpace=wrap;fillColor=#f8cecc;strokeColor=#b85450;dashed=1;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="290" width="330" height="410" as="geometry" />
+        </mxCell>
+        <mxCell id="cs_main" value="main.ts" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b85450;fontSize=11;" vertex="1" parent="cs">
+          <mxGeometry x="10" y="54" width="310" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="cs_dwell" value="&lt;b&gt;dwell_controller&lt;/b&gt;：停留計時、SPA 換頁&lt;br&gt;← core/dwell 狀態機（純函式）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b85450;fontSize=11;align=left;spacingLeft=8;" vertex="1" parent="cs">
+          <mxGeometry x="10" y="98" width="310" height="46" as="geometry" />
+        </mxCell>
+        <mxCell id="cs_extract" value="&lt;b&gt;extractor&lt;/b&gt;：article/main 文字擷取、顯示中的密碼欄位偵測" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b85450;fontSize=11;align=left;spacingLeft=8;" vertex="1" parent="cs">
+          <mxGeometry x="10" y="154" width="310" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="cs_badge" value="&lt;b&gt;badge&lt;/b&gt;：shadow DOM 狀態圓點、鍵盤可操作選單" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b85450;fontSize=11;align=left;spacingLeft=8;" vertex="1" parent="cs">
+          <mxGeometry x="10" y="204" width="310" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="cs_picker" value="&lt;b&gt;picker / hints&lt;/b&gt;：區塊片段、text fragment" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b85450;fontSize=11;align=left;spacingLeft=8;" vertex="1" parent="cs">
+          <mxGeometry x="10" y="254" width="310" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="cs_img" value="&lt;b&gt;image_capture / auto_images&lt;/b&gt;（D6）&lt;br&gt;在頁面 context 抓原圖 → data URL（≤ 8 MB）&lt;br&gt;抓不到 → 請 SW 截圖" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b85450;fontSize=11;align=left;spacingLeft=8;" vertex="1" parent="cs">
+          <mxGeometry x="10" y="304" width="310" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="sw" value="Service Worker（src/background/）&lt;br&gt;&lt;font style=&quot;font-weight:normal;font-size:11px&quot;&gt;閒置 30 秒終止・listener 頂層同步註冊・不依賴全域狀態&lt;/font&gt;" style="swimlane;startSize=44;rounded=1;arcSize=4;html=1;whiteSpace=wrap;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="560" y="290" width="340" height="410" as="geometry" />
+        </mxCell>
+        <mxCell id="sw_main" value="main.ts（所有 listener 在頂層註冊）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="sw">
+          <mxGeometry x="10" y="54" width="320" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="sw_router" value="&lt;b&gt;router&lt;/b&gt;：validate → sender.id → 來源分級 → policy&lt;br&gt;排除清單・無痕・破壞性操作只限 extension page" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#6c8ebf;fontSize=11;align=left;spacingLeft=8;" vertex="1" parent="sw">
+          <mxGeometry x="10" y="98" width="320" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="sw_host" value="&lt;b&gt;offscreen_host&lt;/b&gt;&lt;br&gt;getContexts／createDocument&lt;br&gt;reason: WORKERS" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="sw">
+          <mxGeometry x="10" y="162" width="155" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="sw_sync" value="&lt;b&gt;settings_sync&lt;/b&gt;&lt;br&gt;設定變更時推送&lt;br&gt;settings.sync" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="sw">
+          <mxGeometry x="175" y="162" width="155" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="sw_feat" value="&lt;b&gt;commands&lt;/b&gt;（4 組快捷鍵）・&lt;b&gt;context_menus&lt;/b&gt;&lt;br&gt;&lt;b&gt;omnibox&lt;/b&gt;（ss）・&lt;b&gt;side_panel&lt;/b&gt;.open()&lt;br&gt;&lt;b&gt;history&lt;/b&gt;（chrome.history 匯入）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#6c8ebf;fontSize=11;align=left;spacingLeft=8;" vertex="1" parent="sw">
+          <mxGeometry x="10" y="232" width="320" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="sw_cap" value="&lt;b&gt;captureVisibleTab&lt;/b&gt;（圖片截圖退路）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="sw">
+          <mxGeometry x="10" y="304" width="320" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="sw_note" value="跨環境訊息：JSON 可序列化・Result&amp;lt;T&amp;gt;／ErrorCode・timeout・只重試 retryable" style="text;html=1;whiteSpace=wrap;fontSize=10;fontColor=#555555;align=center;" vertex="1" parent="sw">
+          <mxGeometry x="10" y="348" width="320" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="off" value="Offscreen Document（src/offscreen/）&lt;br&gt;&lt;font style=&quot;font-weight:normal;font-size:11px&quot;&gt;只能用 chrome.runtime・一個擴充功能只有一個・無存活時限&lt;/font&gt;" style="swimlane;startSize=44;rounded=1;arcSize=4;html=1;whiteSpace=wrap;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1090" y="290" width="360" height="410" as="geometry" />
+        </mxCell>
+        <mxCell id="off_router" value="main.ts ＋ router（validate）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;fontSize=11;" vertex="1" parent="off">
+          <mxGeometry x="10" y="54" width="340" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="off_queue" value="&lt;b&gt;job_queue&lt;/b&gt;：序列化所有工作" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;fontSize=11;" vertex="1" parent="off">
+          <mxGeometry x="10" y="98" width="340" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="off_svc" value="&lt;b&gt;services&lt;/b&gt;：index・search・category&lt;br&gt;image（只收 data URL）・history_import・status" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;fontSize=11;" vertex="1" parent="off">
+          <mxGeometry x="10" y="142" width="340" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="off_emb" value="&lt;b&gt;embedder&lt;/b&gt;&lt;br&gt;MediaPipe UniversalEmbedder&lt;br&gt;WebGPU・EmbeddingGemma-2&lt;br&gt;縮短重試（512 token）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;fontSize=11;" vertex="1" parent="off">
+          <mxGeometry x="10" y="202" width="165" height="76" as="geometry" />
+        </mxCell>
+        <mxCell id="off_cache" value="&lt;b&gt;model_cache&lt;/b&gt;&lt;br&gt;streaming 下載&lt;br&gt;進度 → Port" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;fontSize=11;" vertex="1" parent="off">
+          <mxGeometry x="185" y="202" width="165" height="76" as="geometry" />
+        </mxCell>
+        <mxCell id="off_store" value="&lt;b&gt;storage/&lt;/b&gt;&lt;br&gt;vector_index：記憶體 Float32 矩陣、chunk max-pool cosine＋關鍵字＋近期&lt;br&gt;db.ts：schema v2、遷移、meta（取代 localStorage）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eef7ea;strokeColor=#82b366;fontSize=11;" vertex="1" parent="off">
+          <mxGeometry x="10" y="288" width="340" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="st_local" value="chrome.storage.local&lt;br&gt;settings" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="600" y="760" width="260" height="66" as="geometry" />
+        </mxCell>
+        <mxCell id="st_idb" value="&lt;b&gt;IndexedDB&lt;/b&gt;&lt;br&gt;semhist（文字）&lt;br&gt;semhist-img（圖片）&lt;br&gt;名稱與 schema 不變" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1100" y="760" width="170" height="86" as="geometry" />
+        </mxCell>
+        <mxCell id="st_cache" value="&lt;b&gt;Cache API&lt;/b&gt;&lt;br&gt;semhist-models-v1&lt;br&gt;（模型權重）" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=10;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1280" y="760" width="170" height="86" as="geometry" />
+        </mxCell>
+        <mxCell id="hf" value="&lt;b&gt;Hugging Face&lt;/b&gt;&lt;br&gt;EmbeddingGemma-2&lt;br&gt;270M／440M（LiteRT）" style="ellipse;shape=cloud;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1200" y="90" width="210" height="120" as="geometry" />
+        </mxCell>
+
+        <mxCell id="band_core" value="&lt;b&gt;src/core&lt;/b&gt; — 純演算法（禁止 chrome / DOM / indexedDB / fetch）：text（token 估計、中文前處理、切塊）・search（cosine、查詢詞、混合排序）・tagging（pickTags、原型）・policy（denylist）・dwell（狀態機）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="40" y="880" width="1410" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="band_shared" value="&lt;b&gt;src/shared&lt;/b&gt; — 跨環境契約：messaging（contract・validate・client・router・progress）・errors・settings・url・hash・constants・strings" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="40" y="928" width="1410" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="band_note" value="core 與 shared 由 esbuild 打包進每個執行環境；執行環境之間只透過 shared/messaging 的契約溝通，不互相 import。" style="text;html=1;whiteSpace=wrap;fontSize=11;fontColor=#555555;" vertex="1" parent="1">
+          <mxGeometry x="40" y="974" width="1410" height="24" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e_cs_sw" value="runtime.sendMessage&lt;br&gt;index.page・page.info&lt;br&gt;clip・image（data URL）" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;fontSize=10;labelBackgroundColor=#ffffff;strokeColor=#b85450;" edge="1" parent="1" source="cs_dwell" target="sw_router">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_sw_cs" value="tabs.sendMessage&lt;br&gt;INDEX_NOW・PICK_START・CLIP_*" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;fontSize=10;labelBackgroundColor=#ffffff;dashed=1;strokeColor=#6c8ebf;" edge="1" parent="1" source="sw_feat" target="cs_picker">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_ui_sw" value="sendMessage（search.query、設定、分類…）＋ Port（進度）" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;startArrow=block;startFill=1;fontSize=10;labelBackgroundColor=#ffffff;strokeColor=#9673a6;" edge="1" parent="1" source="ui" target="sw">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_sw_off" value="runtime.sendMessage&lt;br&gt;target: offscreen" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;fontSize=10;labelBackgroundColor=#ffffff;strokeColor=#6c8ebf;" edge="1" parent="1" source="sw_router" target="off_router">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_sync_off" value="settings.sync" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;fontSize=10;labelBackgroundColor=#ffffff;dashed=1;strokeColor=#6c8ebf;" edge="1" parent="1" source="sw_sync" target="off_svc">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_host_off" value="offscreen_host：createDocument" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=open;fontSize=10;labelBackgroundColor=#ffffff;dashed=1;strokeColor=#6c8ebf;exitX=1;exitY=0.9;exitDx=0;exitDy=0;entryX=0;entryY=0.9;entryDx=0;entryDy=0;" edge="1" parent="1" source="sw" target="off">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_sw_local" value="settings_store（get／update／onChange）" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;startArrow=block;startFill=1;fontSize=10;labelBackgroundColor=#ffffff;strokeColor=#d6b656;" edge="1" parent="1" source="sw" target="st_local">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_off_idb" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;startArrow=block;startFill=1;strokeColor=#d6b656;exitX=0.25;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="off" target="st_idb">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_off_cache" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;startArrow=block;startFill=1;strokeColor=#d6b656;exitX=0.75;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="off" target="st_cache">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_cache_hf" value="model_cache：fetch 模型權重&lt;br&gt;（唯一的網路請求）" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;fontSize=10;labelBackgroundColor=#ffffff;dashed=1;strokeColor=#666666;exitX=0.75;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="off" target="hf">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <diagram id="modules" name="2. 模組依賴規則">
+    <mxGraphModel dx="1300" dy="700" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1260" pageHeight="620" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="m_title" value="&lt;b&gt;模組依賴規則（dependency-cruiser 強制）&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:11px&quot;&gt;箭頭＝「可以 import」。未畫出的方向一律禁止；不得循環依賴。&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=middle;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="40" y="10" width="760" height="44" as="geometry" />
+        </mxCell>
+
+        <mxCell id="m_ui" value="&lt;b&gt;ui/&lt;/b&gt;&lt;br&gt;Side Panel・Popup・搜尋頁" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="40" y="80" width="190" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="m_content" value="&lt;b&gt;content/&lt;/b&gt;&lt;br&gt;Content Script" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="250" y="80" width="190" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="m_bg" value="&lt;b&gt;background/&lt;/b&gt;&lt;br&gt;Service Worker" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="460" y="80" width="190" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="m_off" value="&lt;b&gt;offscreen/&lt;/b&gt;&lt;br&gt;模型宿主" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="670" y="80" width="190" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="m_mp" value="@mediapipe/tasks-retrieval&lt;br&gt;1.2.3（npm）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;dashed=1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="900" y="80" width="190" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="m_storage" value="&lt;b&gt;storage/&lt;/b&gt;&lt;br&gt;IndexedDB 資料層" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eef7ea;strokeColor=#82b366;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="670" y="200" width="190" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="m_core" value="&lt;b&gt;core/&lt;/b&gt; — 純演算法（無 chrome／DOM／indexedDB／fetch，可在 Node 測試）" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="40" y="320" width="820" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="m_shared" value="&lt;b&gt;shared/&lt;/b&gt; — 契約、型別、常數、設定；只能 import shared 自己" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="40" y="440" width="820" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="m_note" value="所有模組都可以 import shared/（為了清楚起見，圖中省略這些箭頭）。" style="text;html=1;whiteSpace=wrap;fontSize=11;fontColor=#555555;" vertex="1" parent="1">
+          <mxGeometry x="40" y="510" width="820" height="24" as="geometry" />
+        </mxCell>
+
+        <mxCell id="m_forbid" value="&lt;b&gt;禁止&lt;/b&gt;&lt;br&gt;&lt;br&gt;background ↛ storage、offscreen、content、ui、@mediapipe&lt;br&gt;&lt;br&gt;content ↛ storage、offscreen、background、ui&lt;br&gt;&lt;br&gt;ui ↛ storage、offscreen、background、content&lt;br&gt;&lt;br&gt;storage ↛ chrome.*、DOM&lt;br&gt;&lt;br&gt;core ↛ chrome、document、indexedDB、fetch&lt;br&gt;&lt;br&gt;shared ↛ 其他任何 src/*&lt;br&gt;&lt;br&gt;執行環境之間只能透過 shared/messaging 溝通" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff5f5;strokeColor=#b85450;dashed=1;fontSize=11;align=left;verticalAlign=top;spacingLeft=10;spacingTop=6;" vertex="1" parent="1">
+          <mxGeometry x="900" y="200" width="320" height="300" as="geometry" />
+        </mxCell>
+
+        <mxCell id="d_ui_core" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.116;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="m_ui" target="m_core">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d_cs_core" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.372;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="m_content" target="m_core">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d_bg_core" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.628;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="m_bg" target="m_core">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d_off_st" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;" edge="1" parent="1" source="m_off" target="m_storage">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d_st_core" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.884;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="m_storage" target="m_core">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d_off_mp" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;dashed=1;" edge="1" parent="1" source="m_off" target="m_mp">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d_core_shared" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;" edge="1" parent="1" source="m_core" target="m_shared">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
