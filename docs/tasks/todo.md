@@ -1,5 +1,14 @@
 # Tasks: v0.5.0 PoC → 正式架構
 
+## 進度與交接（2026-11-13 下班時）
+
+- 分支：`refactor/architecture`（已推送到 `origin`）
+- 已完成：T1（build pipeline）、T2（型別／lint／測試）、T3（架構與 floor 檢查、golden fixtures）
+- **下一步：Checkpoint 0**，需要人工處理：
+  1. `npm ci && npm run build`，在 `chrome://extensions` 以「載入未封裝項目」選擇 `dist/`，走過 `docs/CONSTRAINTS.md` 的手動驗收五項
+  2. **待決定**：從 `dist/` 載入時，unpacked extension ID 是由資料夾路徑決定的，和目前從 repo 根目錄載入的 ID 不同，所以**現有的 IndexedDB 索引在新 ID 下看不到**。提案：在 manifest 加入固定的 `key`，讓之後的 ID 不再變動；現有資料只能一次性匯出／匯入，或接受重建索引。這屬於 manifest 變更，需要你同意
+- Checkpoint 0 通過後接著做 T4（`core/text`，第一次引入 esbuild）
+
 計畫與決策見 `docs/tasks/plan.md`。每個任務另外還要通過 `docs/tasks/plan.md`「每個任務的共同驗證」。
 Scope：XS = 1 檔、S = 1–2 檔、M = 3–5 檔。測試檔與原始碼放在同一目錄（`*_test.ts`）。
 
@@ -33,8 +42,10 @@ Scope：XS = 1 檔、S = 1–2 檔、M = 3–5 檔。測試檔與原始碼放在
 ### T3：架構與 floor 檢查、`check:task`、PoC golden fixtures
 **說明**：`.dependency-cruiser.cjs` 實作 `docs/CONSTRAINTS.md` 的依賴規則表；`scripts/floor-guard.mjs` 依 constraint skill 的 reference 改寫（suppression、空 catch、skip、刪除斷言、CONSTRAINTS 弱化）；`check:task` script 加上 lcov 與 diff 交集的變更行覆蓋率檢查。`scripts/gen-golden.mjs` 用 PoC 的 `chunk.js`／`store.js` + fake-indexeddb 產生 `test/fixtures/poc/*.json`（切塊、token 估計、排序、v2 DB 快照）。
 **驗收**
-- [ ] depcruise、floor-guard、覆蓋率三項檢查，各自在一個刻意違規的範例上失敗、在乾淨的對照組上通過；檢查器本身出錯時以 exit 2 失敗
-- [ ] golden fixtures 已 commit，而且可以重新產生（重跑後 `git diff` 為空）
+- [x] depcruise、floor-guard、覆蓋率三項檢查，各自在一個刻意違規的範例上失敗、在乾淨的對照組上通過；檢查器本身出錯時以 exit 2 失敗
+- [x] golden fixtures 已 commit，而且可以重新產生（重跑後 `git diff` 為空）
+- 註：floor-guard 在任務結束時用 `--base HEAD`（pre-commit hook），review 時用 `npm run check:review`（`--base main`）。原因：對 `main` 比較時，已核准的 W1 例外會一直被列出
+- 註：dwell 狀態機的 golden（原本預計在 T7）也一併在這裡產生了
 **驗證**：`npm run check:task`
 **依賴**：T2
 **檔案**：`.dependency-cruiser.cjs`、`scripts/floor-guard.mjs`、`scripts/changed-coverage.mjs`、`scripts/gen-golden.mjs`、`test/fixtures/poc/`

@@ -1,0 +1,4 @@
+#!/bin/sh
+# Runs the task-end gate from docs/CONSTRAINTS.md before every commit.
+# Bypassing it (--no-verify) is a floor violation unless the user asked.
+exec npm run --silent check:task

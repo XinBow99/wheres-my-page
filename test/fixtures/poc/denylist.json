@@ -1,0 +1,71 @@
+{
+ "defaultDenylist": "mail.google.com\noutlook.live.com\noutlook.office.com\naccounts.google.com\nlogin.microsoftonline.com\nweb.whatsapp.com\nmessenger.com\nweb.telegram.org\n*bank*\n*.gov.tw/login*\nlocalhost\n127.0.0.1",
+ "custom": "example.com\n*.internal\ndocs.example.org/private*\n\n  ",
+ "cases": [
+  {
+   "url": "https://mail.google.com/mail/u/0/",
+   "defaultDenied": true,
+   "customDenied": false
+  },
+  {
+   "url": "https://www.google.com/search?q=x",
+   "defaultDenied": false,
+   "customDenied": false
+  },
+  {
+   "url": "https://mybank.com.tw/login",
+   "defaultDenied": true,
+   "customDenied": false
+  },
+  {
+   "url": "https://online.bankofexample.com/",
+   "defaultDenied": true,
+   "customDenied": false
+  },
+  {
+   "url": "https://www.gov.tw/login/index",
+   "defaultDenied": true,
+   "customDenied": false
+  },
+  {
+   "url": "https://www.moi.gov.tw/login/page",
+   "defaultDenied": true,
+   "customDenied": false
+  },
+  {
+   "url": "http://localhost:3000/",
+   "defaultDenied": true,
+   "customDenied": false
+  },
+  {
+   "url": "http://127.0.0.1/",
+   "defaultDenied": true,
+   "customDenied": false
+  },
+  {
+   "url": "https://github.com/vllm-project/vllm/issues/1",
+   "defaultDenied": false,
+   "customDenied": false
+  },
+  {
+   "url": "chrome://extensions",
+   "defaultDenied": true,
+   "customDenied": true
+  },
+  {
+   "url": "file:///C:/x.html",
+   "defaultDenied": true,
+   "customDenied": true
+  },
+  {
+   "url": "not a url",
+   "defaultDenied": true,
+   "customDenied": true
+  },
+  {
+   "url": "https://WEB.WHATSAPP.COM/",
+   "defaultDenied": true,
+   "customDenied": false
+  }
+ ]
+}

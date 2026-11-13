@@ -9,13 +9,18 @@
     "node": ">=20"
   },
   "scripts": {
+    "prepare": "git config core.hooksPath .githooks",
     "build": "node scripts/build.mjs && node scripts/verify-dist.mjs",
     "verify:dist": "node scripts/verify-dist.mjs",
     "typecheck": "tsc --noEmit -p .",
     "lint": "eslint . --max-warnings 0",
     "fix": "eslint . --fix",
     "test": "vitest run",
-    "check:fast": "npm run typecheck && npm run lint"
+    "depcruise": "depcruise src --config .dependency-cruiser.cjs",
+    "golden": "node scripts/gen-golden.mjs",
+    "check:fast": "npm run typecheck && npm run lint",
+    "check:task": "npm run check:fast && vitest run --coverage && node scripts/changed-coverage.mjs --base HEAD && npm run depcruise && node scripts/floor-guard.mjs --base HEAD && npm run build",
+    "check:review": "node scripts/floor-guard.mjs --base main && vitest run --coverage && node scripts/changed-coverage.mjs --base main"
   },
   "dependencies": {
     "@mediapipe/tasks-retrieval": "1.2.3"
@@ -23,8 +28,10 @@
   "devDependencies": {
     "@types/chrome": "0.3.7",
     "@vitest/coverage-v8": "5.1.0",
+    "dependency-cruiser": "18.7.2",
     "eslint": "9.39.5",
     "eslint-plugin-jsdoc": "65.4.5",
+    "fake-indexeddb": "6.2.8",
     "globals": "17.14.0",
     "gts": "7.0.0",
     "typescript": "6.0.3",

@@ -31,11 +31,13 @@ Status: **已確認**（2026-11-13）。表格中的指令在 Slice 0（工具�
 | 文件 | 每個 export 的函式／類別／型別都有 JSDoc；`@param`／`@return` 描述語意而非重複型別 | `eslint-plugin-jsdoc`（含於上一列的 eslint；Google 標籤名稱 `@return`／`@fileoverview`） | 每次編輯 | 阻擋 |
 | 架構邊界 | 零違規（規則見下方「模組依賴規則」） | `depcruise src --config .dependency-cruiser.cjs` | 任務結束、CI | 阻擋 |
 | 測試 | 全部通過 | `vitest run` | 任務結束、CI | 阻擋 |
-| 覆蓋率 | 變更行數中，`src/core/**`、`src/shared/**`、`src/storage/**` 的行覆蓋率 ≥ 80% | `vitest run --coverage`（讀 lcov，與 `git diff` 交集） | 任務結束、CI | 阻擋 |
-| Floor guard | 上方 Floor 的 diff 檢查 | `node scripts/floor-guard.mjs --base main` | 任務結束、CI | 阻擋 |
+| 覆蓋率 | 變更行數中，`src/core/**`、`src/shared/**`、`src/storage/**` 的行覆蓋率 ≥ 80% | `vitest run --coverage` + `node scripts/changed-coverage.mjs --base HEAD`（讀 lcov，與 `git diff` 交集） | 任務結束（pre-commit） | 阻擋 |
+| Floor guard | 上方 Floor 的 diff 檢查 | 任務結束：`node scripts/floor-guard.mjs --base HEAD`（pre-commit，檢查這次的變更）；review：`npm run check:review`（`--base main`，W1 列在 T26 前預期會被列出） | 任務結束（pre-commit）、review | 阻擋 |
 | 建置 | `dist/` 產出成功，且 `dist/manifest.json` 引用的每個檔案都存在 | `npm run build && node scripts/verify-dist.mjs` | 任務結束、CI | 阻擋 |
 
 每一列都有可執行指令。沒有指令的數字只是願望，不是約束。
+
+`npm run check:task` 依序執行上表所有「任務結束」的檢查，並由 `.githooks/pre-commit` 在每次 commit 前自動執行（`npm install` 時由 `prepare` script 設定 `core.hooksPath`）。用 `--no-verify` 跳過屬於 Floor 違規，除非使用者明確要求。
 
 **為什麼是這些數字**
 - **80% 變更行覆蓋率**：高到逼你寫測試，低到允許一行設定或防禦性分支不測。只限純邏輯與資料層，因為 `offscreen/`（WebGPU）、`content/`（真實 DOM）、`ui/` 的價值主要靠瀏覽器實測驗證，硬設覆蓋率只會換來無意義的 mock 測試。

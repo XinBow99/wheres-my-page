@@ -32,9 +32,9 @@
 ## Task List（細節見 `docs/tasks/todo.md`）
 
 ### Phase 0：Foundation
-- [ ] T1：Build pipeline：PoC → `dist/`，MediaPipe 從 npm 取得
-- [ ] T2：型別／lint／測試工具鏈 + 第一個模組 `shared/hash`
-- [ ] T3：架構與 floor 檢查、`check:task`、PoC golden fixtures
+- [x] T1：Build pipeline：PoC → `dist/`，MediaPipe 從 npm 取得
+- [x] T2：型別／lint／測試工具鏈 + 第一個模組 `shared/hash`
+- [x] T3：架構與 floor 檢查、`check:task`、PoC golden fixtures
 - [ ] **Checkpoint 0**：所有檢查都已驗證「會擋」；`dist/` 行為與 v0.5.0 相同
 
 ### Phase 1：純核心（T4–T7 彼此獨立，可平行）

@@ -1,0 +1,7180 @@
+{
+ "states": [
+  "INIT",
+  "INELIGIBLE",
+  "DISABLED",
+  "WAITING",
+  "PAUSED",
+  "INDEXING",
+  "INDEXED",
+  "ERROR",
+  "REMOVED"
+ ],
+ "initial": {
+  "state": "INIT",
+  "known": false,
+  "dwellMs": 0,
+  "chunks": 0,
+  "detail": null,
+  "reason": null,
+  "error": null,
+  "tags": []
+ },
+ "cases": [
+  {
+   "ctx": {
+    "state": "INIT",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "URL_CHANGED"
+   },
+   "next": {
+    "state": "INIT",
+    "known": false,
+    "dwellMs": 0,
+    "chunks": 0,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INIT",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "SETTINGS_DISABLED"
+   },
+   "next": {
+    "state": "DISABLED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INIT",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "SETTINGS_ENABLED"
+   },
+   "next": {
+    "state": "INIT",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INIT",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "CHECK_RESULT",
+    "disabled": true
+   },
+   "next": {
+    "state": "DISABLED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INIT",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "CHECK_RESULT",
+    "denied": true,
+    "reason": "denylist"
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "denylist",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INIT",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "CHECK_RESULT",
+    "indexed": true,
+    "tags": [
+     {
+      "id": "ai"
+     }
+    ],
+    "visible": true
+   },
+   "next": {
+    "state": "WAITING",
+    "known": true,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": [
+     {
+      "id": "ai"
+     }
+    ]
+   }
+  },
+  {
+   "ctx": {
+    "state": "INIT",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "CHECK_RESULT",
+    "indexed": false,
+    "visible": false
+   },
+   "next": {
+    "state": "PAUSED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INIT",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "HIDDEN"
+   },
+   "next": {
+    "state": "INIT",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INIT",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "VISIBLE"
+   },
+   "next": {
+    "state": "INIT",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INIT",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "TICK",
+    "ms": 1000,
+    "needMs": 20000
+   },
+   "next": {
+    "state": "INIT",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INIT",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "TICK",
+    "ms": 15000,
+    "needMs": 20000
+   },
+   "next": {
+    "state": "INIT",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INIT",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "INDEX_NOW"
+   },
+   "next": {
+    "state": "INIT",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INIT",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": true,
+     "chunks": 4,
+     "tags": [
+      {
+       "id": "gpu"
+      }
+     ]
+    }
+   },
+   "next": {
+    "state": "INIT",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INIT",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": true,
+     "skipped": "unchanged",
+     "tags": []
+    }
+   },
+   "next": {
+    "state": "INIT",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INIT",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": true,
+     "skipped": "disabled"
+    }
+   },
+   "next": {
+    "state": "INIT",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INIT",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": true,
+     "skipped": "denylist"
+    }
+   },
+   "next": {
+    "state": "INIT",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INIT",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": false,
+     "reason": "no-content"
+    }
+   },
+   "next": {
+    "state": "INIT",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INIT",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": false,
+     "error": "WebGPU missing"
+    }
+   },
+   "next": {
+    "state": "INIT",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INIT",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": false
+    }
+   },
+   "next": {
+    "state": "INIT",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INIT",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "REMOVED"
+   },
+   "next": {
+    "state": "INIT",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "URL_CHANGED"
+   },
+   "next": {
+    "state": "INIT",
+    "known": false,
+    "dwellMs": 0,
+    "chunks": 0,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "SETTINGS_DISABLED"
+   },
+   "next": {
+    "state": "DISABLED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "SETTINGS_ENABLED"
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "CHECK_RESULT",
+    "disabled": true
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "CHECK_RESULT",
+    "denied": true,
+    "reason": "denylist"
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "CHECK_RESULT",
+    "indexed": true,
+    "tags": [
+     {
+      "id": "ai"
+     }
+    ],
+    "visible": true
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "CHECK_RESULT",
+    "indexed": false,
+    "visible": false
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "HIDDEN"
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "VISIBLE"
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "TICK",
+    "ms": 1000,
+    "needMs": 20000
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "TICK",
+    "ms": 15000,
+    "needMs": 20000
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "INDEX_NOW"
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": true,
+     "chunks": 4,
+     "tags": [
+      {
+       "id": "gpu"
+      }
+     ]
+    }
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": true,
+     "skipped": "unchanged",
+     "tags": []
+    }
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": true,
+     "skipped": "disabled"
+    }
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": true,
+     "skipped": "denylist"
+    }
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": false,
+     "reason": "no-content"
+    }
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": false,
+     "error": "WebGPU missing"
+    }
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": false
+    }
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "REMOVED"
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "DISABLED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "URL_CHANGED"
+   },
+   "next": {
+    "state": "INIT",
+    "known": false,
+    "dwellMs": 0,
+    "chunks": 0,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "DISABLED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "SETTINGS_DISABLED"
+   },
+   "next": {
+    "state": "DISABLED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "DISABLED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "SETTINGS_ENABLED"
+   },
+   "next": {
+    "state": "INIT",
+    "known": false,
+    "dwellMs": 0,
+    "chunks": 0,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "DISABLED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "CHECK_RESULT",
+    "disabled": true
+   },
+   "next": {
+    "state": "DISABLED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "DISABLED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "CHECK_RESULT",
+    "denied": true,
+    "reason": "denylist"
+   },
+   "next": {
+    "state": "DISABLED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "DISABLED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "CHECK_RESULT",
+    "indexed": true,
+    "tags": [
+     {
+      "id": "ai"
+     }
+    ],
+    "visible": true
+   },
+   "next": {
+    "state": "DISABLED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "DISABLED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "CHECK_RESULT",
+    "indexed": false,
+    "visible": false
+   },
+   "next": {
+    "state": "DISABLED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "DISABLED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "HIDDEN"
+   },
+   "next": {
+    "state": "DISABLED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "DISABLED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "VISIBLE"
+   },
+   "next": {
+    "state": "DISABLED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "DISABLED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "TICK",
+    "ms": 1000,
+    "needMs": 20000
+   },
+   "next": {
+    "state": "DISABLED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "DISABLED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "TICK",
+    "ms": 15000,
+    "needMs": 20000
+   },
+   "next": {
+    "state": "DISABLED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "DISABLED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "INDEX_NOW"
+   },
+   "next": {
+    "state": "DISABLED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "DISABLED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": true,
+     "chunks": 4,
+     "tags": [
+      {
+       "id": "gpu"
+      }
+     ]
+    }
+   },
+   "next": {
+    "state": "DISABLED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "DISABLED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": true,
+     "skipped": "unchanged",
+     "tags": []
+    }
+   },
+   "next": {
+    "state": "DISABLED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "DISABLED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": true,
+     "skipped": "disabled"
+    }
+   },
+   "next": {
+    "state": "DISABLED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "DISABLED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": true,
+     "skipped": "denylist"
+    }
+   },
+   "next": {
+    "state": "DISABLED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "DISABLED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": false,
+     "reason": "no-content"
+    }
+   },
+   "next": {
+    "state": "DISABLED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "DISABLED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": false,
+     "error": "WebGPU missing"
+    }
+   },
+   "next": {
+    "state": "DISABLED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "DISABLED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": false
+    }
+   },
+   "next": {
+    "state": "DISABLED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "DISABLED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "REMOVED"
+   },
+   "next": {
+    "state": "DISABLED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "WAITING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "URL_CHANGED"
+   },
+   "next": {
+    "state": "INIT",
+    "known": false,
+    "dwellMs": 0,
+    "chunks": 0,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "WAITING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "SETTINGS_DISABLED"
+   },
+   "next": {
+    "state": "DISABLED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "WAITING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "SETTINGS_ENABLED"
+   },
+   "next": {
+    "state": "WAITING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "WAITING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "CHECK_RESULT",
+    "disabled": true
+   },
+   "next": {
+    "state": "WAITING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "WAITING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "CHECK_RESULT",
+    "denied": true,
+    "reason": "denylist"
+   },
+   "next": {
+    "state": "WAITING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "WAITING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "CHECK_RESULT",
+    "indexed": true,
+    "tags": [
+     {
+      "id": "ai"
+     }
+    ],
+    "visible": true
+   },
+   "next": {
+    "state": "WAITING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "WAITING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "CHECK_RESULT",
+    "indexed": false,
+    "visible": false
+   },
+   "next": {
+    "state": "WAITING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "WAITING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "HIDDEN"
+   },
+   "next": {
+    "state": "PAUSED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "WAITING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "VISIBLE"
+   },
+   "next": {
+    "state": "WAITING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "WAITING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "TICK",
+    "ms": 1000,
+    "needMs": 20000
+   },
+   "next": {
+    "state": "WAITING",
+    "known": false,
+    "dwellMs": 6000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "WAITING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "TICK",
+    "ms": 15000,
+    "needMs": 20000
+   },
+   "next": {
+    "state": "INDEXING",
+    "known": false,
+    "dwellMs": 20000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": [],
+    "manual": false
+   }
+  },
+  {
+   "ctx": {
+    "state": "WAITING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "INDEX_NOW"
+   },
+   "next": {
+    "state": "INDEXING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": [],
+    "manual": true
+   }
+  },
+  {
+   "ctx": {
+    "state": "WAITING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": true,
+     "chunks": 4,
+     "tags": [
+      {
+       "id": "gpu"
+      }
+     ]
+    }
+   },
+   "next": {
+    "state": "WAITING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "WAITING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": true,
+     "skipped": "unchanged",
+     "tags": []
+    }
+   },
+   "next": {
+    "state": "WAITING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "WAITING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": true,
+     "skipped": "disabled"
+    }
+   },
+   "next": {
+    "state": "WAITING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "WAITING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": true,
+     "skipped": "denylist"
+    }
+   },
+   "next": {
+    "state": "WAITING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "WAITING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": false,
+     "reason": "no-content"
+    }
+   },
+   "next": {
+    "state": "WAITING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "WAITING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": false,
+     "error": "WebGPU missing"
+    }
+   },
+   "next": {
+    "state": "WAITING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "WAITING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": false
+    }
+   },
+   "next": {
+    "state": "WAITING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "WAITING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "REMOVED"
+   },
+   "next": {
+    "state": "WAITING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "PAUSED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "URL_CHANGED"
+   },
+   "next": {
+    "state": "INIT",
+    "known": false,
+    "dwellMs": 0,
+    "chunks": 0,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "PAUSED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "SETTINGS_DISABLED"
+   },
+   "next": {
+    "state": "DISABLED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "PAUSED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "SETTINGS_ENABLED"
+   },
+   "next": {
+    "state": "PAUSED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "PAUSED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "CHECK_RESULT",
+    "disabled": true
+   },
+   "next": {
+    "state": "PAUSED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "PAUSED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "CHECK_RESULT",
+    "denied": true,
+    "reason": "denylist"
+   },
+   "next": {
+    "state": "PAUSED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "PAUSED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "CHECK_RESULT",
+    "indexed": true,
+    "tags": [
+     {
+      "id": "ai"
+     }
+    ],
+    "visible": true
+   },
+   "next": {
+    "state": "PAUSED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "PAUSED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "CHECK_RESULT",
+    "indexed": false,
+    "visible": false
+   },
+   "next": {
+    "state": "PAUSED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "PAUSED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "HIDDEN"
+   },
+   "next": {
+    "state": "PAUSED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "PAUSED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "VISIBLE"
+   },
+   "next": {
+    "state": "WAITING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "PAUSED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "TICK",
+    "ms": 1000,
+    "needMs": 20000
+   },
+   "next": {
+    "state": "PAUSED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "PAUSED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "TICK",
+    "ms": 15000,
+    "needMs": 20000
+   },
+   "next": {
+    "state": "PAUSED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "PAUSED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "INDEX_NOW"
+   },
+   "next": {
+    "state": "INDEXING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": [],
+    "manual": true
+   }
+  },
+  {
+   "ctx": {
+    "state": "PAUSED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": true,
+     "chunks": 4,
+     "tags": [
+      {
+       "id": "gpu"
+      }
+     ]
+    }
+   },
+   "next": {
+    "state": "PAUSED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "PAUSED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": true,
+     "skipped": "unchanged",
+     "tags": []
+    }
+   },
+   "next": {
+    "state": "PAUSED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "PAUSED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": true,
+     "skipped": "disabled"
+    }
+   },
+   "next": {
+    "state": "PAUSED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "PAUSED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": true,
+     "skipped": "denylist"
+    }
+   },
+   "next": {
+    "state": "PAUSED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "PAUSED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": false,
+     "reason": "no-content"
+    }
+   },
+   "next": {
+    "state": "PAUSED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "PAUSED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": false,
+     "error": "WebGPU missing"
+    }
+   },
+   "next": {
+    "state": "PAUSED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "PAUSED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": false
+    }
+   },
+   "next": {
+    "state": "PAUSED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "PAUSED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "REMOVED"
+   },
+   "next": {
+    "state": "PAUSED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INDEXING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "URL_CHANGED"
+   },
+   "next": {
+    "state": "INIT",
+    "known": false,
+    "dwellMs": 0,
+    "chunks": 0,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INDEXING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "SETTINGS_DISABLED"
+   },
+   "next": {
+    "state": "DISABLED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INDEXING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "SETTINGS_ENABLED"
+   },
+   "next": {
+    "state": "INDEXING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INDEXING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "CHECK_RESULT",
+    "disabled": true
+   },
+   "next": {
+    "state": "INDEXING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INDEXING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "CHECK_RESULT",
+    "denied": true,
+    "reason": "denylist"
+   },
+   "next": {
+    "state": "INDEXING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INDEXING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "CHECK_RESULT",
+    "indexed": true,
+    "tags": [
+     {
+      "id": "ai"
+     }
+    ],
+    "visible": true
+   },
+   "next": {
+    "state": "INDEXING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INDEXING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "CHECK_RESULT",
+    "indexed": false,
+    "visible": false
+   },
+   "next": {
+    "state": "INDEXING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INDEXING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "HIDDEN"
+   },
+   "next": {
+    "state": "INDEXING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INDEXING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "VISIBLE"
+   },
+   "next": {
+    "state": "INDEXING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INDEXING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "TICK",
+    "ms": 1000,
+    "needMs": 20000
+   },
+   "next": {
+    "state": "INDEXING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INDEXING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "TICK",
+    "ms": 15000,
+    "needMs": 20000
+   },
+   "next": {
+    "state": "INDEXING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INDEXING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "INDEX_NOW"
+   },
+   "next": {
+    "state": "INDEXING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INDEXING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": true,
+     "chunks": 4,
+     "tags": [
+      {
+       "id": "gpu"
+      }
+     ]
+    }
+   },
+   "next": {
+    "state": "INDEXED",
+    "known": true,
+    "dwellMs": 5000,
+    "chunks": 4,
+    "detail": "new",
+    "reason": null,
+    "error": null,
+    "tags": [
+     {
+      "id": "gpu"
+     }
+    ]
+   }
+  },
+  {
+   "ctx": {
+    "state": "INDEXING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": true,
+     "skipped": "unchanged",
+     "tags": []
+    }
+   },
+   "next": {
+    "state": "INDEXED",
+    "known": true,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": "unchanged",
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INDEXING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": true,
+     "skipped": "disabled"
+    }
+   },
+   "next": {
+    "state": "DISABLED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INDEXING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": true,
+     "skipped": "denylist"
+    }
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "denylist",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INDEXING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": false,
+     "reason": "no-content"
+    }
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "no-content",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INDEXING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": false,
+     "error": "WebGPU missing"
+    }
+   },
+   "next": {
+    "state": "ERROR",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": "WebGPU missing",
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INDEXING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": false
+    }
+   },
+   "next": {
+    "state": "ERROR",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": "未知錯誤",
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INDEXING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "REMOVED"
+   },
+   "next": {
+    "state": "INDEXING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INDEXED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "URL_CHANGED"
+   },
+   "next": {
+    "state": "INIT",
+    "known": false,
+    "dwellMs": 0,
+    "chunks": 0,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INDEXED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "SETTINGS_DISABLED"
+   },
+   "next": {
+    "state": "DISABLED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INDEXED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "SETTINGS_ENABLED"
+   },
+   "next": {
+    "state": "INDEXED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INDEXED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "CHECK_RESULT",
+    "disabled": true
+   },
+   "next": {
+    "state": "INDEXED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INDEXED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "CHECK_RESULT",
+    "denied": true,
+    "reason": "denylist"
+   },
+   "next": {
+    "state": "INDEXED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INDEXED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "CHECK_RESULT",
+    "indexed": true,
+    "tags": [
+     {
+      "id": "ai"
+     }
+    ],
+    "visible": true
+   },
+   "next": {
+    "state": "INDEXED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INDEXED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "CHECK_RESULT",
+    "indexed": false,
+    "visible": false
+   },
+   "next": {
+    "state": "INDEXED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INDEXED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "HIDDEN"
+   },
+   "next": {
+    "state": "INDEXED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INDEXED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "VISIBLE"
+   },
+   "next": {
+    "state": "INDEXED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INDEXED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "TICK",
+    "ms": 1000,
+    "needMs": 20000
+   },
+   "next": {
+    "state": "INDEXED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INDEXED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "TICK",
+    "ms": 15000,
+    "needMs": 20000
+   },
+   "next": {
+    "state": "INDEXED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INDEXED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "INDEX_NOW"
+   },
+   "next": {
+    "state": "INDEXING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": [],
+    "manual": true
+   }
+  },
+  {
+   "ctx": {
+    "state": "INDEXED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": true,
+     "chunks": 4,
+     "tags": [
+      {
+       "id": "gpu"
+      }
+     ]
+    }
+   },
+   "next": {
+    "state": "INDEXED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INDEXED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": true,
+     "skipped": "unchanged",
+     "tags": []
+    }
+   },
+   "next": {
+    "state": "INDEXED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INDEXED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": true,
+     "skipped": "disabled"
+    }
+   },
+   "next": {
+    "state": "INDEXED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INDEXED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": true,
+     "skipped": "denylist"
+    }
+   },
+   "next": {
+    "state": "INDEXED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INDEXED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": false,
+     "reason": "no-content"
+    }
+   },
+   "next": {
+    "state": "INDEXED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INDEXED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": false,
+     "error": "WebGPU missing"
+    }
+   },
+   "next": {
+    "state": "INDEXED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INDEXED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": false
+    }
+   },
+   "next": {
+    "state": "INDEXED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INDEXED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "REMOVED"
+   },
+   "next": {
+    "state": "REMOVED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "ERROR",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "URL_CHANGED"
+   },
+   "next": {
+    "state": "INIT",
+    "known": false,
+    "dwellMs": 0,
+    "chunks": 0,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "ERROR",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "SETTINGS_DISABLED"
+   },
+   "next": {
+    "state": "DISABLED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "ERROR",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "SETTINGS_ENABLED"
+   },
+   "next": {
+    "state": "ERROR",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "ERROR",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "CHECK_RESULT",
+    "disabled": true
+   },
+   "next": {
+    "state": "ERROR",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "ERROR",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "CHECK_RESULT",
+    "denied": true,
+    "reason": "denylist"
+   },
+   "next": {
+    "state": "ERROR",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "ERROR",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "CHECK_RESULT",
+    "indexed": true,
+    "tags": [
+     {
+      "id": "ai"
+     }
+    ],
+    "visible": true
+   },
+   "next": {
+    "state": "ERROR",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "ERROR",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "CHECK_RESULT",
+    "indexed": false,
+    "visible": false
+   },
+   "next": {
+    "state": "ERROR",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "ERROR",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "HIDDEN"
+   },
+   "next": {
+    "state": "ERROR",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "ERROR",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "VISIBLE"
+   },
+   "next": {
+    "state": "ERROR",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "ERROR",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "TICK",
+    "ms": 1000,
+    "needMs": 20000
+   },
+   "next": {
+    "state": "ERROR",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "ERROR",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "TICK",
+    "ms": 15000,
+    "needMs": 20000
+   },
+   "next": {
+    "state": "ERROR",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "ERROR",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "INDEX_NOW"
+   },
+   "next": {
+    "state": "INDEXING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": [],
+    "manual": true
+   }
+  },
+  {
+   "ctx": {
+    "state": "ERROR",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": true,
+     "chunks": 4,
+     "tags": [
+      {
+       "id": "gpu"
+      }
+     ]
+    }
+   },
+   "next": {
+    "state": "ERROR",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "ERROR",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": true,
+     "skipped": "unchanged",
+     "tags": []
+    }
+   },
+   "next": {
+    "state": "ERROR",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "ERROR",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": true,
+     "skipped": "disabled"
+    }
+   },
+   "next": {
+    "state": "ERROR",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "ERROR",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": true,
+     "skipped": "denylist"
+    }
+   },
+   "next": {
+    "state": "ERROR",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "ERROR",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": false,
+     "reason": "no-content"
+    }
+   },
+   "next": {
+    "state": "ERROR",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "ERROR",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": false,
+     "error": "WebGPU missing"
+    }
+   },
+   "next": {
+    "state": "ERROR",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "ERROR",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": false
+    }
+   },
+   "next": {
+    "state": "ERROR",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "ERROR",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "REMOVED"
+   },
+   "next": {
+    "state": "ERROR",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "REMOVED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "URL_CHANGED"
+   },
+   "next": {
+    "state": "INIT",
+    "known": false,
+    "dwellMs": 0,
+    "chunks": 0,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "REMOVED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "SETTINGS_DISABLED"
+   },
+   "next": {
+    "state": "DISABLED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "REMOVED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "SETTINGS_ENABLED"
+   },
+   "next": {
+    "state": "REMOVED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "REMOVED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "CHECK_RESULT",
+    "disabled": true
+   },
+   "next": {
+    "state": "REMOVED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "REMOVED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "CHECK_RESULT",
+    "denied": true,
+    "reason": "denylist"
+   },
+   "next": {
+    "state": "REMOVED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "REMOVED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "CHECK_RESULT",
+    "indexed": true,
+    "tags": [
+     {
+      "id": "ai"
+     }
+    ],
+    "visible": true
+   },
+   "next": {
+    "state": "REMOVED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "REMOVED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "CHECK_RESULT",
+    "indexed": false,
+    "visible": false
+   },
+   "next": {
+    "state": "REMOVED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "REMOVED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "HIDDEN"
+   },
+   "next": {
+    "state": "REMOVED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "REMOVED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "VISIBLE"
+   },
+   "next": {
+    "state": "REMOVED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "REMOVED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "TICK",
+    "ms": 1000,
+    "needMs": 20000
+   },
+   "next": {
+    "state": "REMOVED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "REMOVED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "TICK",
+    "ms": 15000,
+    "needMs": 20000
+   },
+   "next": {
+    "state": "REMOVED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "REMOVED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "INDEX_NOW"
+   },
+   "next": {
+    "state": "INDEXING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": [],
+    "manual": true
+   }
+  },
+  {
+   "ctx": {
+    "state": "REMOVED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": true,
+     "chunks": 4,
+     "tags": [
+      {
+       "id": "gpu"
+      }
+     ]
+    }
+   },
+   "next": {
+    "state": "REMOVED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "REMOVED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": true,
+     "skipped": "unchanged",
+     "tags": []
+    }
+   },
+   "next": {
+    "state": "REMOVED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "REMOVED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": true,
+     "skipped": "disabled"
+    }
+   },
+   "next": {
+    "state": "REMOVED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "REMOVED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": true,
+     "skipped": "denylist"
+    }
+   },
+   "next": {
+    "state": "REMOVED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "REMOVED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": false,
+     "reason": "no-content"
+    }
+   },
+   "next": {
+    "state": "REMOVED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "REMOVED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": false,
+     "error": "WebGPU missing"
+    }
+   },
+   "next": {
+    "state": "REMOVED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "REMOVED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": false
+    }
+   },
+   "next": {
+    "state": "REMOVED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "REMOVED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "REMOVED"
+   },
+   "next": {
+    "state": "REMOVED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "no-content",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "URL_CHANGED"
+   },
+   "next": {
+    "state": "INIT",
+    "known": false,
+    "dwellMs": 0,
+    "chunks": 0,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "no-content",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "SETTINGS_DISABLED"
+   },
+   "next": {
+    "state": "DISABLED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "no-content",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "no-content",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "SETTINGS_ENABLED"
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "no-content",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "no-content",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "CHECK_RESULT",
+    "disabled": true
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "no-content",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "no-content",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "CHECK_RESULT",
+    "denied": true,
+    "reason": "denylist"
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "no-content",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "no-content",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "CHECK_RESULT",
+    "indexed": true,
+    "tags": [
+     {
+      "id": "ai"
+     }
+    ],
+    "visible": true
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "no-content",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "no-content",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "CHECK_RESULT",
+    "indexed": false,
+    "visible": false
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "no-content",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "no-content",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "HIDDEN"
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "no-content",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "no-content",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "VISIBLE"
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "no-content",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "no-content",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "TICK",
+    "ms": 1000,
+    "needMs": 20000
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "no-content",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "no-content",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "TICK",
+    "ms": 15000,
+    "needMs": 20000
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "no-content",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "no-content",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "INDEX_NOW"
+   },
+   "next": {
+    "state": "INDEXING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "no-content",
+    "error": null,
+    "tags": [],
+    "manual": true
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "no-content",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": true,
+     "chunks": 4,
+     "tags": [
+      {
+       "id": "gpu"
+      }
+     ]
+    }
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "no-content",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "no-content",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": true,
+     "skipped": "unchanged",
+     "tags": []
+    }
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "no-content",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "no-content",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": true,
+     "skipped": "disabled"
+    }
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "no-content",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "no-content",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": true,
+     "skipped": "denylist"
+    }
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "no-content",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "no-content",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": false,
+     "reason": "no-content"
+    }
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "no-content",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "no-content",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": false,
+     "error": "WebGPU missing"
+    }
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "no-content",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "no-content",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": false
+    }
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "no-content",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "no-content",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "REMOVED"
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "no-content",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "secret-input",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "URL_CHANGED"
+   },
+   "next": {
+    "state": "INIT",
+    "known": false,
+    "dwellMs": 0,
+    "chunks": 0,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "secret-input",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "SETTINGS_DISABLED"
+   },
+   "next": {
+    "state": "DISABLED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "secret-input",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "secret-input",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "SETTINGS_ENABLED"
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "secret-input",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "secret-input",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "CHECK_RESULT",
+    "disabled": true
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "secret-input",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "secret-input",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "CHECK_RESULT",
+    "denied": true,
+    "reason": "denylist"
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "secret-input",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "secret-input",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "CHECK_RESULT",
+    "indexed": true,
+    "tags": [
+     {
+      "id": "ai"
+     }
+    ],
+    "visible": true
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "secret-input",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "secret-input",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "CHECK_RESULT",
+    "indexed": false,
+    "visible": false
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "secret-input",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "secret-input",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "HIDDEN"
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "secret-input",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "secret-input",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "VISIBLE"
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "secret-input",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "secret-input",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "TICK",
+    "ms": 1000,
+    "needMs": 20000
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "secret-input",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "secret-input",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "TICK",
+    "ms": 15000,
+    "needMs": 20000
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "secret-input",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "secret-input",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "INDEX_NOW"
+   },
+   "next": {
+    "state": "INDEXING",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "secret-input",
+    "error": null,
+    "tags": [],
+    "manual": true
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "secret-input",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": true,
+     "chunks": 4,
+     "tags": [
+      {
+       "id": "gpu"
+      }
+     ]
+    }
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "secret-input",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "secret-input",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": true,
+     "skipped": "unchanged",
+     "tags": []
+    }
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "secret-input",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "secret-input",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": true,
+     "skipped": "disabled"
+    }
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "secret-input",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "secret-input",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": true,
+     "skipped": "denylist"
+    }
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "secret-input",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "secret-input",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": false,
+     "reason": "no-content"
+    }
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "secret-input",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "secret-input",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": false,
+     "error": "WebGPU missing"
+    }
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "secret-input",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "secret-input",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": false
+    }
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "secret-input",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "secret-input",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "REMOVED"
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "secret-input",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "denylist",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "URL_CHANGED"
+   },
+   "next": {
+    "state": "INIT",
+    "known": false,
+    "dwellMs": 0,
+    "chunks": 0,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "denylist",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "SETTINGS_DISABLED"
+   },
+   "next": {
+    "state": "DISABLED",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "denylist",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "denylist",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "SETTINGS_ENABLED"
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "denylist",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "denylist",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "CHECK_RESULT",
+    "disabled": true
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "denylist",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "denylist",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "CHECK_RESULT",
+    "denied": true,
+    "reason": "denylist"
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "denylist",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "denylist",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "CHECK_RESULT",
+    "indexed": true,
+    "tags": [
+     {
+      "id": "ai"
+     }
+    ],
+    "visible": true
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "denylist",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "denylist",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "CHECK_RESULT",
+    "indexed": false,
+    "visible": false
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "denylist",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "denylist",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "HIDDEN"
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "denylist",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "denylist",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "VISIBLE"
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "denylist",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "denylist",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "TICK",
+    "ms": 1000,
+    "needMs": 20000
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "denylist",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "denylist",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "TICK",
+    "ms": 15000,
+    "needMs": 20000
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "denylist",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "denylist",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "INDEX_NOW"
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "denylist",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "denylist",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": true,
+     "chunks": 4,
+     "tags": [
+      {
+       "id": "gpu"
+      }
+     ]
+    }
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "denylist",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "denylist",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": true,
+     "skipped": "unchanged",
+     "tags": []
+    }
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "denylist",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "denylist",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": true,
+     "skipped": "disabled"
+    }
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "denylist",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "denylist",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": true,
+     "skipped": "denylist"
+    }
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "denylist",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "denylist",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": false,
+     "reason": "no-content"
+    }
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "denylist",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "denylist",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": false,
+     "error": "WebGPU missing"
+    }
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "denylist",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "denylist",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": false
+    }
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "denylist",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "denylist",
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "REMOVED"
+   },
+   "next": {
+    "state": "INELIGIBLE",
+    "known": false,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": "denylist",
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "WAITING",
+    "known": true,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "URL_CHANGED"
+   },
+   "next": {
+    "state": "INIT",
+    "known": false,
+    "dwellMs": 0,
+    "chunks": 0,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "WAITING",
+    "known": true,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "SETTINGS_DISABLED"
+   },
+   "next": {
+    "state": "DISABLED",
+    "known": true,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "WAITING",
+    "known": true,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "SETTINGS_ENABLED"
+   },
+   "next": {
+    "state": "WAITING",
+    "known": true,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "WAITING",
+    "known": true,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "CHECK_RESULT",
+    "disabled": true
+   },
+   "next": {
+    "state": "WAITING",
+    "known": true,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "WAITING",
+    "known": true,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "CHECK_RESULT",
+    "denied": true,
+    "reason": "denylist"
+   },
+   "next": {
+    "state": "WAITING",
+    "known": true,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "WAITING",
+    "known": true,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "CHECK_RESULT",
+    "indexed": true,
+    "tags": [
+     {
+      "id": "ai"
+     }
+    ],
+    "visible": true
+   },
+   "next": {
+    "state": "WAITING",
+    "known": true,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "WAITING",
+    "known": true,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "CHECK_RESULT",
+    "indexed": false,
+    "visible": false
+   },
+   "next": {
+    "state": "WAITING",
+    "known": true,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "WAITING",
+    "known": true,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "HIDDEN"
+   },
+   "next": {
+    "state": "PAUSED",
+    "known": true,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "WAITING",
+    "known": true,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "VISIBLE"
+   },
+   "next": {
+    "state": "WAITING",
+    "known": true,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "WAITING",
+    "known": true,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "TICK",
+    "ms": 1000,
+    "needMs": 20000
+   },
+   "next": {
+    "state": "WAITING",
+    "known": true,
+    "dwellMs": 6000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "WAITING",
+    "known": true,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "TICK",
+    "ms": 15000,
+    "needMs": 20000
+   },
+   "next": {
+    "state": "INDEXING",
+    "known": true,
+    "dwellMs": 20000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": [],
+    "manual": false
+   }
+  },
+  {
+   "ctx": {
+    "state": "WAITING",
+    "known": true,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "INDEX_NOW"
+   },
+   "next": {
+    "state": "INDEXING",
+    "known": true,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": [],
+    "manual": true
+   }
+  },
+  {
+   "ctx": {
+    "state": "WAITING",
+    "known": true,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": true,
+     "chunks": 4,
+     "tags": [
+      {
+       "id": "gpu"
+      }
+     ]
+    }
+   },
+   "next": {
+    "state": "WAITING",
+    "known": true,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "WAITING",
+    "known": true,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": true,
+     "skipped": "unchanged",
+     "tags": []
+    }
+   },
+   "next": {
+    "state": "WAITING",
+    "known": true,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "WAITING",
+    "known": true,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": true,
+     "skipped": "disabled"
+    }
+   },
+   "next": {
+    "state": "WAITING",
+    "known": true,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "WAITING",
+    "known": true,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": true,
+     "skipped": "denylist"
+    }
+   },
+   "next": {
+    "state": "WAITING",
+    "known": true,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "WAITING",
+    "known": true,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": false,
+     "reason": "no-content"
+    }
+   },
+   "next": {
+    "state": "WAITING",
+    "known": true,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "WAITING",
+    "known": true,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": false,
+     "error": "WebGPU missing"
+    }
+   },
+   "next": {
+    "state": "WAITING",
+    "known": true,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "WAITING",
+    "known": true,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "RESULT",
+    "result": {
+     "ok": false
+    }
+   },
+   "next": {
+    "state": "WAITING",
+    "known": true,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  },
+  {
+   "ctx": {
+    "state": "WAITING",
+    "known": true,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   },
+   "ev": {
+    "type": "REMOVED"
+   },
+   "next": {
+    "state": "WAITING",
+    "known": true,
+    "dwellMs": 5000,
+    "chunks": 3,
+    "detail": null,
+    "reason": null,
+    "error": null,
+    "tags": []
+   }
+  }
+ ]
+}

@@ -1,0 +1,13 @@
+# Paths floor-guard does not scan. Each entry must cite an exception in
+# docs/CONSTRAINTS.md and is removed together with that exception.
+
+# W1: frozen v0.5.0 PoC files (behavioral reference, deleted in T26).
+background.js
+chunk.js
+content.js
+offscreen.js
+picker.js
+popup.js
+search.js
+shared.js
+store.js
