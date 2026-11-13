@@ -33,6 +33,114 @@ export interface TextGolden {
   cases: TextGoldenCase[];
 }
 
+/** A category score as the PoC wrote it. */
+export interface GoldenScore {
+  /** Category id. */
+  id: string;
+  /** Score. */
+  s: number;
+}
+
+/** One pickTags case of math.json. */
+export interface PickTagsCase {
+  /** Input scores. */
+  scores: GoldenScore[];
+  /** PoC pickTags(scores). */
+  defaults: GoldenScore[];
+  /** PoC pickTags(scores, {minScore: 0.45}). */
+  strict: GoldenScore[];
+}
+
+/** Contents of math.json: PoC store.js pure functions. */
+export interface MathGolden {
+  /** PoC TAG_DEFAULTS. */
+  tagDefaults: Record<string, number>;
+  /** Four seeded 8-dimensional input vectors. */
+  vectors: number[][];
+  /** PoC normalize(v) per input vector. */
+  normalize: number[][];
+  /** PoC normalize of a 4-dimensional zero vector. */
+  normalizeZero: number[];
+  /** PoC dot(v0, v1) and dot(v0, v1, 3). */
+  dot: number[];
+  /** PoC meanVec(vectors, 8). */
+  meanVec: number[];
+  /** PoC toDim(v2 as array, 4) and toDim(v3 as array, 8). */
+  toDim: number[][];
+  /** pickTags cases. */
+  pickTags: PickTagsCase[];
+  /** PoC queryTerms(q) per query. */
+  queryTerms: Array<{q: string; terms: Array<{t: string; w: number}>}>;
+}
+
+/** A page record in the PoC v2 database. */
+export interface GoldenPage {
+  url: string;
+  title: string;
+  domain: string;
+  source: string;
+  ts: number;
+  vec: number[];
+  tagsManual: string[];
+  tagsRemoved: string[];
+  tagsAuto: GoldenScore[];
+}
+
+/** A chunk record in the PoC v2 database. */
+export interface GoldenChunk {
+  id: number;
+  url: string;
+  idx: number;
+  text: string;
+  vec: number[];
+}
+
+/** A category record in the PoC v2 database. */
+export interface GoldenCategory {
+  id: string;
+  name: string;
+  order: number;
+  vec: number[] | null;
+}
+
+/** A search result as the PoC returned it (only the fields used here). */
+export interface GoldenResult {
+  url: string;
+  snippet: string;
+  score: number;
+  sem: number;
+  kw: number;
+}
+
+/** Contents of store.json: a PoC-written database plus query outputs. */
+export interface StoreGolden {
+  /** Frozen Date.now of the generator. */
+  now: number;
+  /** Vector dimension. */
+  dim: number;
+  /** IndexedDB dump. */
+  db: {
+    name: string;
+    version: number;
+    stores: {
+      pages: GoldenPage[];
+      chunks: GoldenChunk[];
+      categories: GoldenCategory[];
+    };
+  };
+  /** VectorIndex.search calls. */
+  search: Array<{
+    query: string;
+    qvec: number[];
+    opts: {k: number; sinceTs?: number; domain?: string; tag?: string};
+    results: GoldenResult[];
+  }>;
+  /** VectorIndex.listCategories(). */
+  categories: {categories: Array<{id: string; examples: number}>};
+  /** VectorIndex.scoreCategories of the whisper page vector. */
+  scoreWhisper: GoldenScore[];
+}
+
 /**
  * Reads and parses one fixture file.
  *
@@ -46,3 +154,9 @@ function readFixture(name: string): unknown {
 
 /** PoC chunk.js golden outputs. */
 export const textGolden = readFixture('text.json') as TextGolden;
+
+/** PoC store.js pure-function golden outputs. */
+export const mathGolden = readFixture('math.json') as MathGolden;
+
+/** PoC VectorIndex golden database and outputs. */
+export const storeGolden = readFixture('store.json') as StoreGolden;

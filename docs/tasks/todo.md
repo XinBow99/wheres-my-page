@@ -3,7 +3,7 @@
 ## 進度與交接（2026-11-13）
 
 - 分支：`refactor/architecture`
-- 已完成：T1、T2、T3、T4（T4 的真實 Chrome 驗收待做）；另修正 build（Node 22 在含非 ASCII 字元的路徑下，`cpSync` 複製目錄會無聲崩潰）
+- 已完成：T1、T2、T3、T4（T4 的真實 Chrome 驗收待做）、T5；另修正 build（Node 22 在含非 ASCII 字元的路徑下，`cpSync` 複製目錄會無聲崩潰）
 - **已決定**：`dist/` 使用固定 extension ID `iogmdngpbdmhfphilnennjocdhclneok`（build 注入 manifest `key`，見 `docs/tasks/plan.md` 決策 6）。repo 根目錄 PoC 的舊索引不搬移，在新 ID 下重建
 - **下一步：Checkpoint 0 的人工驗收**：`npm ci && npm run build`，在 `chrome://extensions` 停用從 repo 根目錄載入的舊版，以「載入未封裝項目」選擇 `dist/`，確認 ID 是 `iogmdngpbdmhfphilnennjocdhclneok`，再走過 `docs/CONSTRAINTS.md` 的手動驗收 1–4 項（第 5 項此時不適用：新 ID 下沒有舊資料）。這次建立的索引要保留，作為 T11／Checkpoint 3 的 v0.5.0 相容資料
 - Checkpoint 0 第 2 項已在使用者的 Chrome 通過（ID `iogm…`，〈人工智慧〉32 chunks、〈珍珠奶茶〉30 chunks）；第 1、3、4 項待使用者回報
@@ -74,9 +74,9 @@ Scope：XS = 1 檔、S = 1–2 檔、M = 3–5 檔。測試檔與原始碼放在
 ### T5：`core/search` + `core/tagging`
 **說明**：`vector_math.ts`（`normalize`、`dot`、`meanVec`、`toDim`）、`query_terms.ts`、`ranking.ts`（從 `VectorIndex.search` 抽出的計分：關鍵字加分 0.08／0.05，上限 0.24；近期加分；history 扣分，所有權重都是具名常數）、`tagging/pick_tags.ts`、`tagging/prototypes.ts`（原型向量的純計算）。
 **驗收**
-- [ ] 每個函式的輸出與 golden 相同（浮點數比對容許 1e-6）
-- [ ] 邊界情況：零向量、維度不足、空查詢、純中文查詢產生 2 字 shingle
-- [ ] `ranking` 與 `pickTags` 的排序與 golden 完全一致
+- [x] 每個函式的輸出與 golden 相同（浮點數比對容許 1e-6；另以 18,000 組隨機輸入與 PoC `store.js` 比對，輸出逐位元相同）
+- [x] 邊界情況：零向量、維度不足、空查詢、純中文查詢產生 2 字 shingle
+- [x] `ranking` 與 `pickTags` 的排序與 golden 完全一致（`ranking` 以 store.json 的 7 個查詢重組 `VectorIndex.search` 比對；`autoTags` 與 PoC 存在 DB 的 `tagsAuto` 相同）
 **驗證**：`npm test -- core/search core/tagging`
 **依賴**：T3
 **檔案**：`src/core/search/{vector_math,query_terms,ranking}.ts`、`src/core/tagging/{pick_tags,prototypes}.ts` + 測試
