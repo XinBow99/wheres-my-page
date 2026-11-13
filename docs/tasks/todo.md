@@ -3,10 +3,11 @@
 ## 進度與交接（2026-11-13）
 
 - 分支：`refactor/architecture`
-- 已完成：T1、T2、T3；另修正 build（Node 22 在含非 ASCII 字元的路徑下，`cpSync` 複製目錄會無聲崩潰）
+- 已完成：T1、T2、T3、T4（T4 的真實 Chrome 驗收待做）；另修正 build（Node 22 在含非 ASCII 字元的路徑下，`cpSync` 複製目錄會無聲崩潰）
 - **已決定**：`dist/` 使用固定 extension ID `iogmdngpbdmhfphilnennjocdhclneok`（build 注入 manifest `key`，見 `docs/tasks/plan.md` 決策 6）。repo 根目錄 PoC 的舊索引不搬移，在新 ID 下重建
 - **下一步：Checkpoint 0 的人工驗收**：`npm ci && npm run build`，在 `chrome://extensions` 停用從 repo 根目錄載入的舊版，以「載入未封裝項目」選擇 `dist/`，確認 ID 是 `iogmdngpbdmhfphilnennjocdhclneok`，再走過 `docs/CONSTRAINTS.md` 的手動驗收 1–4 項（第 5 項此時不適用：新 ID 下沒有舊資料）。這次建立的索引要保留，作為 T11／Checkpoint 3 的 v0.5.0 相容資料
-- Checkpoint 0 通過後接著做 T4（`core/text`，第一次引入 esbuild）
+- Checkpoint 0 第 2 項已在使用者的 Chrome 通過（ID `iogm…`，〈人工智慧〉32 chunks、〈珍珠奶茶〉30 chunks）；第 1、3、4 項待使用者回報
+- **T4 待人工驗收**：`dist/chunk.js` 已改由 esbuild 從 `src/legacy/chunk_shim.ts` 產出。需在 `chrome://extensions` 按 `iogm…` 卡片的重新載入（↻），再開一個未索引過的中文頁面，確認徽章出現 ✓ 與合理的 chunk 數
 
 計畫與決策見 `docs/tasks/plan.md`。每個任務另外還要通過 `docs/tasks/plan.md`「每個任務的共同驗證」。
 Scope：XS = 1 檔、S = 1–2 檔、M = 3–5 檔。測試檔與原始碼放在同一目錄（`*_test.ts`）。
@@ -62,9 +63,9 @@ Scope：XS = 1 檔、S = 1–2 檔、M = 3–5 檔。測試檔與原始碼放在
 ### T4：`core/text` + shim `dist/chunk.js`
 **說明**：`tokens.ts`（`estimateTokens`、`truncateToTokens`）、`preprocess.ts`（控制字元與零寬字元清理、空白正規化）、`chunk.ts`（`chunkText`）。`src/legacy/chunk_shim.ts` 以 PoC 的 export 名稱重新匯出，build 產出 `dist/chunk.js` 覆蓋 PoC 版本。
 **驗收**
-- [ ] golden corpus（中文長文、中英混合、emoji、超長單段、只有控制字元）的切塊結果與 PoC 逐字相同
-- [ ] 不變量測試：每個 chunk 的 `estimateTokens` ≤ budget；chunk 數 ≤ `maxChunks`；相鄰 chunk 之間有重疊
-- [ ] 在 shim 版本下，真實 Chrome 中的中文頁面索引成功，chunk 數與 PoC 相同
+- [x] golden corpus（中文長文、中英混合、emoji、超長單段、只有控制字元）的切塊結果與 PoC 逐字相同
+- [x] 不變量測試：每個 chunk 的 `estimateTokens` ≤ budget；chunk 數 ≤ `maxChunks`；相鄰 chunk 之間有重疊
+- [ ] 在 shim 版本下，真實 Chrome 中的中文頁面索引成功，chunk 數與 PoC 相同（**待重新載入擴充功能後驗證**；已用 16,000 組隨機輸入比對 PoC `chunk.js` 與 `dist/chunk.js`，輸出完全相同）
 **驗證**：`npm test -- core/text`；手動驗收 2–4 項
 **依賴**：T3
 **檔案**：`src/core/text/{tokens,preprocess,chunk}.ts` + 測試、`src/legacy/chunk_shim.ts`、`scripts/build.mjs`

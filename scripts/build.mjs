@@ -3,7 +3,8 @@
  *
  * Strangler phase: the frozen v0.5.0 PoC files are copied as-is, and the
  * MediaPipe runtime comes from node_modules instead of vendored copies.
- * Later tasks replace PoC files one at a time with esbuild outputs from src/.
+ * PoC files are replaced one at a time by esbuild outputs from src/legacy
+ * shims (LEGACY_SHIMS).
  */
 
 import {
@@ -18,6 +19,8 @@ import {
 import {dirname, join} from 'node:path';
 import {fileURLToPath} from 'node:url';
 
+import {build as esbuild} from 'esbuild';
+
 import {EXTENSION_KEY} from './extension-key.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -27,10 +30,10 @@ const MEDIAPIPE = join(ROOT, 'node_modules', '@mediapipe', 'tasks-retrieval');
 /**
  * Frozen PoC files (docs/CONSTRAINTS.md exception W1), copied verbatim.
  * manifest.json is written separately because it gets the fixed `key`.
+ * A file replaced by a shim in LEGACY_SHIMS is no longer listed here.
  */
 const POC_FILES = [
   'background.js',
-  'chunk.js',
   'content.js',
   'offscreen.html',
   'offscreen.js',
@@ -43,6 +46,16 @@ const POC_FILES = [
   'shared.js',
   'store.js',
 ];
+
+/**
+ * PoC modules rebuilt from src/, as [entry under src/legacy, output in dist].
+ * Each shim keeps the PoC file's name and export names, so the remaining PoC
+ * files import the new code without changes (docs/tasks/plan.md decision 1).
+ */
+const LEGACY_SHIMS = [['chunk_shim.ts', 'chunk.js']];
+
+/** Oldest Chrome the manifest allows (minimum_chrome_version). */
+const CHROME_TARGET = 'chrome116';
 
 /**
  * MediaPipe files the extension loads, as [source in package, dest in dist].
@@ -103,7 +116,23 @@ function writeManifest() {
   );
 }
 
-function build() {
+/**
+ * Bundles each legacy shim from src/ into a standalone ES module in dist/.
+ */
+async function buildShims() {
+  for (const [entry, out] of LEGACY_SHIMS) {
+    await esbuild({
+      entryPoints: [join(ROOT, 'src', 'legacy', entry)],
+      outfile: join(DIST, out),
+      bundle: true,
+      format: 'esm',
+      target: CHROME_TARGET,
+      logLevel: 'warning',
+    });
+  }
+}
+
+async function build() {
   rmSync(DIST, {recursive: true, force: true});
   mkdirSync(DIST, {recursive: true});
 
@@ -111,6 +140,7 @@ function build() {
   for (const file of POC_FILES) {
     copyFile(join(ROOT, file), join(DIST, file));
   }
+  await buildShims();
   copyDir(join(ROOT, 'icons'), join(DIST, 'icons'));
 
   if (!existsSync(MEDIAPIPE)) {
@@ -124,4 +154,4 @@ function build() {
   console.log(`build: wrote ${DIST}`);
 }
 
-build();
+await build();
