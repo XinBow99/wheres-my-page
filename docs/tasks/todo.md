@@ -10,7 +10,7 @@
   - 使用者回報 Checkpoint 0 第 1、3、4 項通過（console 無錯誤、IndexedDB 有資料、中文搜尋命中）
   - T4：〈台北101〉（未索引過）停留後出現 ✓，面板顯示「已索引（32 段）」與自動分類標籤
   - **還差一項待人工**（Claude in Chrome 無法開啟 `chrome-extension://` 頁面）：搜尋頁改一項設定、儲存、重新整理確認仍在（T6）
-- 下一步：Phase 2（T8 通訊契約）；Phase 2 結束有一次人工 review
+- Phase 2：T8 完成；下一步 T9（`messaging/validate`）→ T10；Phase 2 結束有一次人工 review（Checkpoint 2，review `contract.ts`）
 
 計畫與決策見 `docs/tasks/plan.md`。每個任務另外還要通過 `docs/tasks/plan.md`「每個任務的共同驗證」。
 Scope：XS = 1 檔、S = 1–2 檔、M = 3–5 檔。測試檔與原始碼放在同一目錄（`*_test.ts`）。
@@ -133,9 +133,16 @@ Scope：XS = 1 檔、S = 1–2 檔、M = 3–5 檔。測試檔與原始碼放在
 ### T8：`shared/errors` + `messaging/contract`
 **說明**：`ErrorCode`、`AppError`、`Result<T>`、`toWireError(unknown)`。`RequestMap` 一對一涵蓋 PoC 的全部訊息：content／UI → background 約 20 種、background → offscreen、background → content 的 5 種（`INDEX_NOW`、`PICK_START`、`CLIP_*`）。每種訊息宣告 `allowedFrom` 與預設 `timeoutMs`。`JsonValue` 約束確保 payload 都能 JSON 序列化。附上 PoC 訊息名稱 → 新名稱的對照表（給 legacy adapter 使用）。
 **驗收**
-- [ ] 型別測試（`expectTypeOf`）：含 `Float32Array`／`Map`／`Date` 的 payload 型別編譯失敗
-- [ ] PoC 的每種訊息在對照表中都有對應，沒有遺漏（測試：從 PoC 原始碼萃取出的訊息清單 ⊆ 對照表）
-- [ ] 破壞性訊息的 `allowedFrom` 只包含 `extension-page`
+- [x] 型別測試（`expectTypeOf`）：含 `Float32Array`／`Map`／`Date` 的 payload 型別編譯失敗（`IsJsonable` 為 false；`Checked<M>` 約束已實測：在契約裡放入 `Float32Array` 時 `tsc` 報 TS2344）
+- [x] PoC 的每種訊息在對照表中都有對應，沒有遺漏（從 PoC 原始碼萃取出 24 種訊息名稱，與 `LEGACY_MESSAGE_TYPES` 的 key 完全相同）
+- [x] 破壞性訊息的 `allowedFrom` 只包含 `extension-page`（`PRIVILEGED_MESSAGES`：`index.clear`、`index.deleteDomain`、`history.import`、`category.put`、`category.delete`）
+- 給 Checkpoint 2 review 的設計選擇：
+  - `RequestMap` 依接收端分成 `background`／`offscreen`／`content` 三張表（SPEC 的示意是一張扁平表）；bg 與 offscreen 同名訊息共用型別，只有 `index.image`、`page.info`、`history.import` 的 payload 不同，另外新增 `settings.sync`
+  - `index.deletePage`、`tag.set` 允許 content script 發送（PoC 的 badge「移除此頁」與 picker 刪除區塊需要），background 需檢查 URL 屬於發送者的分頁（T11 實作）
+  - 自動索引遇到排除清單／無痕／停用回傳 `IndexOutcome` 的 `skipped`（狀態機要顯示原因），不是 `DENIED` 錯誤；`DENIED` 用於發送者不符與無痕視窗的手動 clip／image
+  - 只有 `NO_RECEIVER` 預設可重試（與 PoC 只重試 "Receiving end does not exist" 相同）；`TIMEOUT` 不重試，避免重複執行模型下載或歷史匯入
+  - `index.image` 新增 `image`（content script 抓到的原圖 data URL，SPEC D6）
+  - timeout：讀記憶體 5 s、需開 DB 15 s、可能載入模型 5 min、歷史匯入 30 min、`index.now` 65 s（PoC 等 60 s）
 **驗證**：`npm test -- shared/messaging shared/errors`
 **依賴**：T4、T5、T6、T7
 **檔案**：`src/shared/errors.ts`、`src/shared/types.ts`、`src/shared/messaging/contract.ts` + 測試
