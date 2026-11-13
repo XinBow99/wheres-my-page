@@ -20,7 +20,8 @@
     "golden": "node scripts/gen-golden.mjs",
     "check:fast": "npm run typecheck && npm run lint",
     "check:task": "npm run check:fast && vitest run --coverage && node scripts/changed-coverage.mjs --base HEAD && npm run depcruise && node scripts/floor-guard.mjs --base HEAD && npm run build",
-    "check:review": "node scripts/floor-guard.mjs --base main && vitest run --coverage && node scripts/changed-coverage.mjs --base main"
+    "check:review": "node scripts/floor-guard.mjs --base main && vitest run --coverage && node scripts/changed-coverage.mjs --base main",
+    "bench": "vitest bench --run --reporter=verbose"
   },
   "dependencies": {
     "@mediapipe/tasks-retrieval": "1.2.3"

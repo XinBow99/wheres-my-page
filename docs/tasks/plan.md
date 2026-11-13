@@ -53,7 +53,7 @@
 - [x] **Checkpoint 2（人工介面 review）**：你 review `contract.ts`，確認後才進入 Phase 3
 
 ### Phase 3：資料層 + Offscreen
-- [ ] T11：`storage/db` + `storage/vector_index` + shim `dist/store.js` + v0.5.0 資料相容測試
+- [x] T11：`storage/db` + `storage/vector_index` + shim `dist/store.js` + v0.5.0 資料相容測試
 - [ ] T12：`offscreen/embedder` + `job_queue`（模型快取、縮短重試、WebGPU 偵測、下載進度）
 - [ ] T13：offscreen 文字服務（index／clip／search／category）+ router + legacy adapter
 - [ ] T14：offscreen 圖片服務（只接受 data URL，D6）+ 歷史匯入 + status；切換 `offscreen.html` entry

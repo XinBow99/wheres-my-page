@@ -11,7 +11,7 @@
   - T4：〈台北101〉（未索引過）停留後出現 ✓，面板顯示「已索引（32 段）」與自動分類標籤
   - **還差一項待人工**（Claude in Chrome 無法開啟 `chrome-extension://` 頁面）：搜尋頁改一項設定、儲存、重新整理確認仍在（T6）
 - Phase 2：T8–T10 完成；Checkpoint 2 使用者已確認（2026-11-14，接受 T8–T10 下方列出的設計選擇）
-- 下一步：Phase 3（T11 `storage/db` + `vector_index` + shim `dist/store.js`）
+- Phase 3：T11 完成（Chrome 驗收待重新載入）；下一步 T12（`offscreen/embedder` + `job_queue`）
 
 計畫與決策見 `docs/tasks/plan.md`。每個任務另外還要通過 `docs/tasks/plan.md`「每個任務的共同驗證」。
 Scope：XS = 1 檔、S = 1–2 檔、M = 3–5 檔。測試檔與原始碼放在同一目錄（`*_test.ts`）。
@@ -186,9 +186,12 @@ Scope：XS = 1 檔、S = 1–2 檔、M = 3–5 檔。測試檔與原始碼放在
 ### T11：`storage/db` + `vector_index` + shim `dist/store.js` + 資料相容
 **說明**：`db.ts`：開啟資料庫、v1→v2 遷移（沿用 PoC 邏輯），新增 `meta` 鍵 `textModel`，並在第一次開啟時遷移 `localStorage.semhist_model`。`vector_index.ts`：記憶體矩陣與持久化，計算改呼叫 `core`。public API 與 PoC `VectorIndex` 相容（給 shim 使用）。
 **驗收**
-- [ ] 用 T3 的 v0.5.0 DB 快照開啟：頁數、chunk 數、分類、標籤完全一致；對同一個查詢向量的搜尋結果與 golden 相同
-- [ ] fake-indexeddb 測試：upsert（含 history 不覆蓋 page）、delete、deleteDomain、clear、關閉後重開仍保留、分類 CRUD 後重新標記、手動標籤影響原型
-- [ ] `vitest bench`：2 萬段 × 256 維的搜尋耗時記錄到 `docs/CONSTRAINTS.md` 的 ratchet 表
+- [x] 用 T3 的 v0.5.0 DB 快照開啟：頁數、chunk 數、分類、標籤完全一致；對同一個查詢向量的搜尋結果與 golden 相同（`vector_index_golden_test.ts`：頁面、chunk、矩陣、分類逐值相同；7 個查詢、3 種 browse、listCategories、stats、scoreCategories 全部相同）
+- [x] fake-indexeddb 測試：upsert（含 history 不覆蓋 page）、delete、deleteDomain、clear、關閉後重開仍保留、分類 CRUD 後重新標記、手動標籤影響原型（另有差異測試：PoC `store.js` 與新版各跑 6 組 × 120 步隨機操作，每步比對完整狀態與 9 種查詢輸出，最後兩邊重開資料庫再比一次；mutation 實測：改動 visits 計算有 7 個測試失敗、拿掉刪除後重新標記有 3 個失敗）
+- [x] `vitest bench`：2 萬段 × 256 維的搜尋耗時記錄到 `docs/CONSTRAINTS.md` 的 ratchet 表（p50 7.0 ms；同機 PoC 6.6 ms。`npm run bench`）
+- 註：`meta.textModel`：PoC 的 offscreen 仍讀寫 `localStorage.semhist_model`，所以 shim 階段以 localStorage 為準，每次開啟文字索引時同步到 meta（不刪除 localStorage）；T14 切換 entry 後改以 meta 為準
+- 註：`dist/store.js` 改由 `src/legacy/store_shim.ts` 產出（29.6 KB，PoC 18.4 KB：一起打包了 constants 等模組）
+- [ ] **待人工**：重新載入擴充功能後，既有索引仍可搜尋、已索引頁面的 ✓ 與標籤正常
 **驗證**：`npm test -- storage`；手動：用 v0.5.0 的真實 profile 載入新 `dist/`，既有索引仍可搜尋
 **依賴**：T10
 **檔案**：`src/storage/{db,vector_index}.ts` + 測試、`src/legacy/store_shim.ts`、`docs/CONSTRAINTS.md`（只填入基準值）

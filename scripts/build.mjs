@@ -42,7 +42,6 @@ const POC_FILES = [
   'search.css',
   'search.html',
   'search.js',
-  'store.js',
 ];
 
 /**
@@ -53,6 +52,7 @@ const POC_FILES = [
 const LEGACY_SHIMS = [
   ['chunk_shim.ts', 'chunk.js'],
   ['shared_shim.ts', 'shared.js'],
+  ['store_shim.ts', 'store.js'],
 ];
 
 /** Classic script that blocks MediaPipe usage metrics in the offscreen document. */

@@ -137,8 +137,12 @@ export interface StoreGolden {
     opts: {k: number; sinceTs?: number; domain?: string; tag?: string};
     results: GoldenResult[];
   }>;
+  /** VectorIndex.browse with {k: 10} and the tags gpu and __none__. */
+  browse: {all: GoldenResult[]; gpu: GoldenResult[]; none: GoldenResult[]};
   /** VectorIndex.listCategories(). */
   categories: {categories: Array<{id: string; examples: number}>};
+  /** VectorIndex.stats(). */
+  stats: Record<string, number>;
   /** VectorIndex.scoreCategories of the whisper page vector. */
   scoreWhisper: GoldenScore[];
 }

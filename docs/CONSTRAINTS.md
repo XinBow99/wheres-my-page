@@ -67,8 +67,14 @@ Status: **已確認**（2026-11-13）。表格中的指令在 Slice 0（工具�
 | 指標 | 今日數值 | 方向 | 量測方式 |
 |---|---|---|---|
 | 專案整體覆蓋率（core/shared/storage） | 待量測（目前無測試） | 不得下降 | `vitest run --coverage` |
-| 語意搜尋延遲 p50（暖機後，2 萬段） | 待量測 | 不得上升超過 20% | `vitest bench`（`VectorIndex.search` 純計算）+ DevTools 實測 |
+| 語意搜尋延遲 p50（暖機後，2 萬段） | 見下方「基準值紀錄」 | 不得上升超過 20% | `vitest bench`（`VectorIndex.search` 純計算）+ DevTools 實測 |
 | `dist/` 大小（不含 MediaPipe wasm） | 待量測 | 不得增加超過 10% | `scripts/verify-dist.mjs` 輸出 |
+
+### 基準值紀錄
+
+數值放在這裡而不是表格欄位中：floor-guard 依出現順序比對表格列內的數字，在「今日數值」欄填入數字會被誤判成門檻改變。
+
+- 語意搜尋延遲 p50：7.0 ms（`npm run bench`，`VectorIndex.search`，2 萬段 × 256 維；2026-11-14，T11）。同一台機器上 PoC `store.js` 為 6.6 ms
 
 ## 每個切片的手動驗收（無法機械化，必須在真實 Chrome 執行）
 
