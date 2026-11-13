@@ -66,7 +66,9 @@ function build() {
   cpSync(join(ROOT, 'icons'), join(DIST, 'icons'), {recursive: true});
 
   if (!existsSync(MEDIAPIPE)) {
-    throw new Error('build: @mediapipe/tasks-retrieval not installed; run `npm ci` first');
+    throw new Error(
+      'build: @mediapipe/tasks-retrieval not installed; run `npm ci` first',
+    );
   }
   for (const [from, to] of MEDIAPIPE_FILES) {
     copyFile(join(MEDIAPIPE, from), join(DIST, to));

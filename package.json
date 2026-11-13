@@ -10,9 +10,24 @@
   },
   "scripts": {
     "build": "node scripts/build.mjs && node scripts/verify-dist.mjs",
-    "verify:dist": "node scripts/verify-dist.mjs"
+    "verify:dist": "node scripts/verify-dist.mjs",
+    "typecheck": "tsc --noEmit -p .",
+    "lint": "eslint . --max-warnings 0",
+    "fix": "eslint . --fix",
+    "test": "vitest run",
+    "check:fast": "npm run typecheck && npm run lint"
   },
   "dependencies": {
     "@mediapipe/tasks-retrieval": "1.2.3"
+  },
+  "devDependencies": {
+    "@types/chrome": "0.3.7",
+    "@vitest/coverage-v8": "5.1.0",
+    "eslint": "9.39.5",
+    "eslint-plugin-jsdoc": "65.4.5",
+    "globals": "17.14.0",
+    "gts": "7.0.0",
+    "typescript": "6.0.3",
+    "vitest": "5.1.0"
   }
 }

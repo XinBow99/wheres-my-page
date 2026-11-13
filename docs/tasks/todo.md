@@ -22,8 +22,9 @@ Scope：XS = 1 檔、S = 1–2 檔、M = 3–5 檔。測試檔與原始碼放在
 ### T2：型別／lint／測試工具鏈 + `shared/hash`
 **說明**：`tsconfig.json`（`strict`、`noUncheckedIndexedAccess`、`types: ["chrome"]`）、`gts` + `eslint-plugin-jsdoc` 的 flat config（加上 `no-restricted-properties` 禁止 `innerHTML` 等屬性）、`vitest.config.ts`（`**/*_test.ts`、coverage v8 lcov）。用第一個真實模組 `src/shared/hash.ts`（FNV-1a，與 PoC 的輸出逐位元相同）把整條工具鏈跑通。
 **驗收**
-- [ ] `npm run check:fast` 在乾淨程式碼上通過，在**刻意違規**時失敗：`any`、缺 JSDoc、`innerHTML`、格式錯誤各試一次（依 constraint skill 的要求，驗證檢查真的會擋）
-- [ ] `hashText` 對 golden 字串（中文、emoji、空字串）的輸出與 PoC 相同
+- [x] `npm run check:fast` 在乾淨程式碼上通過，在**刻意違規**時失敗：`any`、缺 JSDoc、`innerHTML`、格式錯誤各試一次（依 constraint skill 的要求，驗證檢查真的會擋）
+- [x] `hashText` 對 golden 字串（中文、emoji、空字串）的輸出與 PoC 相同
+- 註：TypeScript 鎖在 6.0.3（typescript-eslint 8.72 只支援 < 6.1）；gts 7.0.0 根目錄的 `eslint.config.js` 引用了不存在的檔案，因此改從套件 main（`build/src/index.js`）載入規則集
 **驗證**：`npm run check:fast && npm test`
 **依賴**：T1
 **檔案**：`tsconfig.json`、`eslint.config.mjs`、`vitest.config.ts`、`src/shared/hash.ts`、`src/shared/hash_test.ts`

@@ -9,7 +9,7 @@ Status: **已確認**（2026-11-13）。表格中的指令在 Slice 0（工具�
 
 ## Floor（永遠生效，不需設定）
 
-- **不得新增抑制註解**：`@ts-ignore`、`@ts-nocheck`、`@ts-expect-error`、`eslint-disable*`、`prettier-ignore`、`istanbul ignore`、`c8 ignore`。型別或 lint 錯誤要修程式，不是關掉檢查。
+- **不得新增抑制註解**（ESLint 已設 `noInlineConfig: true`，`eslint-disable` 註解本身不會生效，還會被當成 warning 擋下）：`@ts-ignore`、`@ts-nocheck`、`@ts-expect-error`、`eslint-disable*`、`prettier-ignore`、`istanbul ignore`、`c8 ignore`。型別或 lint 錯誤要修程式，不是關掉檢查。
 - **不得吞掉錯誤**：禁止空的 `catch {}`、`.catch(() => {})`、`catch` 後只 `console.log` 然後繼續當作成功。每個錯誤要嘛往上拋，要嘛轉成契約中定義的 `ErrorCode` 回傳給呼叫端，要嘛附上註解說明為何可以安全忽略（例如「分頁已關閉，訊息無人接收是預期行為」），並以 `logger.debug` 記錄。
 - **不得留下未實作的殘骸**：`throw new Error('Not implemented')`、沒有追蹤 issue 的 `TODO`、只回傳假資料的函式。
 - **不得跳過或刪除測試**，除非 commit message 寫明原因。`it.skip`、`describe.skip`、`it.todo` 都算。
@@ -26,9 +26,9 @@ Status: **已確認**（2026-11-13）。表格中的指令在 Slice 0（工具�
 | 面向 | 規則 | 檢查指令 | 執行時機 | 失敗時 |
 |---|---|---|---|---|
 | 型別 | `strict: true` + `noUncheckedIndexedAccess`，零錯誤；禁止 `any`（含隱式），邊界一律用 `unknown` 再收窄 | `tsc --noEmit -p .` | 每次編輯 | 阻擋 |
-| 風格 | Google TypeScript Style Guide，以 Google 官方 `gts` 設定為準；零 error、零 warning | `gts lint` | 每次編輯 | 阻擋 |
-| 格式 | Prettier（gts 內建設定），LF 換行 | `gts check`（含於 lint） | 每次編輯 | 阻擋 |
-| 文件 | 每個 export 的函式／類別／型別都有 JSDoc；`@param`／`@return` 描述語意而非重複型別 | `eslint-plugin-jsdoc`（`require-jsdoc` 於 publicOnly） | 每次編輯 | 阻擋 |
+| 風格 | Google TypeScript Style Guide，以 Google 官方 `gts` 設定為準；零 error、零 warning | `eslint . --max-warnings 0`（`eslint.config.mjs` 載入 gts 7.0.0 規則集；`gts lint` CLI 不擋 warning，所以不用它） | 每次編輯 | 阻擋 |
+| 格式 | Prettier（gts 內建設定），LF 換行 | `prettier/prettier` 規則（含於上一列的 eslint） | 每次編輯 | 阻擋 |
+| 文件 | 每個 export 的函式／類別／型別都有 JSDoc；`@param`／`@return` 描述語意而非重複型別 | `eslint-plugin-jsdoc`（含於上一列的 eslint；Google 標籤名稱 `@return`／`@fileoverview`） | 每次編輯 | 阻擋 |
 | 架構邊界 | 零違規（規則見下方「模組依賴規則」） | `depcruise src --config .dependency-cruiser.cjs` | 任務結束、CI | 阻擋 |
 | 測試 | 全部通過 | `vitest run` | 任務結束、CI | 阻擋 |
 | 覆蓋率 | 變更行數中，`src/core/**`、`src/shared/**`、`src/storage/**` 的行覆蓋率 ≥ 80% | `vitest run --coverage`（讀 lcov，與 `git diff` 交集） | 任務結束、CI | 阻擋 |
