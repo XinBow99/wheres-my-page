@@ -50,7 +50,7 @@
 - [x] T8：`shared/errors` + `messaging/contract`（全部訊息型別、JSON 約束、`allowedFrom`）
 - [x] T9：`messaging/validate`（手寫型別守衛，D2）
 - [x] T10：`messaging/client`、`router`、`progress`（timeout、重試、發送者分級、Port）
-- [ ] **Checkpoint 2（人工介面 review）**：你 review `contract.ts`，確認後才進入 Phase 3
+- [x] **Checkpoint 2（人工介面 review）**：你 review `contract.ts`，確認後才進入 Phase 3
 
 ### Phase 3：資料層 + Offscreen
 - [ ] T11：`storage/db` + `storage/vector_index` + shim `dist/store.js` + v0.5.0 資料相容測試

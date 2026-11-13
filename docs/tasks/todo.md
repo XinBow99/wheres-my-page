@@ -10,7 +10,8 @@
   - 使用者回報 Checkpoint 0 第 1、3、4 項通過（console 無錯誤、IndexedDB 有資料、中文搜尋命中）
   - T4：〈台北101〉（未索引過）停留後出現 ✓，面板顯示「已索引（32 段）」與自動分類標籤
   - **還差一項待人工**（Claude in Chrome 無法開啟 `chrome-extension://` 頁面）：搜尋頁改一項設定、儲存、重新整理確認仍在（T6）
-- Phase 2：T8–T10 完成。**下一步是 Checkpoint 2（人工 review）**：請使用者 review `src/shared/messaging/contract.ts` 與 `src/shared/errors.ts`（設計選擇列在 T8、T9 下方），確認後才開始 Phase 3
+- Phase 2：T8–T10 完成；Checkpoint 2 使用者已確認（2026-11-14，接受 T8–T10 下方列出的設計選擇）
+- 下一步：Phase 3（T11 `storage/db` + `vector_index` + shim `dist/store.js`）
 
 計畫與決策見 `docs/tasks/plan.md`。每個任務另外還要通過 `docs/tasks/plan.md`「每個任務的共同驗證」。
 Scope：XS = 1 檔、S = 1–2 檔、M = 3–5 檔。測試檔與原始碼放在同一目錄（`*_test.ts`）。
@@ -175,8 +176,8 @@ Scope：XS = 1 檔、S = 1–2 檔、M = 3–5 檔。測試檔與原始碼放在
 **Scope**：M
 
 ### ✅ Checkpoint 2（人工介面 review）
-- [ ] 你 review `src/shared/messaging/contract.ts` 與 `errors.ts`
-- [ ] 契約確認後才開始 Phase 3
+- [x] 你 review `src/shared/messaging/contract.ts` 與 `errors.ts`（2026-11-14 確認）
+- [x] 契約確認後才開始 Phase 3
 
 ---
 
