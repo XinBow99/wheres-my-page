@@ -3,7 +3,7 @@
 ## 進度與交接（2026-11-13）
 
 - 分支：`refactor/architecture`
-- 已完成：T1、T2、T3、T4（T4 的真實 Chrome 驗收待做）、T5；另修正 build（Node 22 在含非 ASCII 字元的路徑下，`cpSync` 複製目錄會無聲崩潰）
+- 已完成：T1、T2、T3、T4（T4 的真實 Chrome 驗收待做）、T5、T6（搜尋頁設定的人工確認待做）；另修正 build（Node 22 在含非 ASCII 字元的路徑下，`cpSync` 複製目錄會無聲崩潰）
 - **已決定**：`dist/` 使用固定 extension ID `iogmdngpbdmhfphilnennjocdhclneok`（build 注入 manifest `key`，見 `docs/tasks/plan.md` 決策 6）。repo 根目錄 PoC 的舊索引不搬移，在新 ID 下重建
 - **下一步：Checkpoint 0 的人工驗收**：`npm ci && npm run build`，在 `chrome://extensions` 停用從 repo 根目錄載入的舊版，以「載入未封裝項目」選擇 `dist/`，確認 ID 是 `iogmdngpbdmhfphilnennjocdhclneok`，再走過 `docs/CONSTRAINTS.md` 的手動驗收 1–4 項（第 5 項此時不適用：新 ID 下沒有舊資料）。這次建立的索引要保留，作為 T11／Checkpoint 3 的 v0.5.0 相容資料
 - Checkpoint 0 第 2 項已在使用者的 Chrome 通過（ID `iogm…`，〈人工智慧〉32 chunks、〈珍珠奶茶〉30 chunks）；第 1、3、4 項待使用者回報
@@ -101,10 +101,11 @@ Scope：XS = 1 檔、S = 1–2 檔、M = 3–5 檔。測試檔與原始碼放在
 ### T6：`shared` 基礎 + denylist + `settings_store` + shim `dist/shared.js`
 **說明**：`shared/constants.ts`（MODELS、DIM、PROMPT、預設分類、DB／Cache 名稱）、`shared/settings.ts`（型別、DEFAULTS、`parseSettings(unknown)` 對壞值回退到預設）、`shared/url.ts`（`canonicalUrl`、`domainOf`）、`core/policy/denylist.ts`、`shared/platform/settings_store.ts`（`get`／`update(patch)`／`onChange`，取代 popup 中容易 race 的 read-modify-write）。用 shim 產出 `dist/shared.js`。
 **驗收**
-- [ ] denylist：glob、hostname 與路徑、非 http(s)、無效 URL 等情況的結果與 PoC 相同
-- [ ] `parseSettings` 對缺欄位、型別錯誤、超出範圍的值都回傳合法設定（表格驅動測試）
-- [ ] `canonicalUrl` 會移除 hash 與 utm／fbclid／gclid／ref 參數，結果與 PoC 相同
-**驗證**：`npm test -- shared core/policy`；手動確認搜尋頁的設定可以儲存與讀回
+- [x] denylist：glob、hostname 與路徑、非 http(s)、無效 URL 等情況的結果與 PoC 相同
+- [x] `parseSettings` 對缺欄位、型別錯誤、超出範圍的值都回傳合法設定（表格驅動測試）
+- [x] `canonicalUrl` 會移除 hash 與 utm／fbclid／gclid／ref 參數，結果與 PoC 相同
+**驗證**：`npm test -- shared core/policy`；手動確認搜尋頁的設定可以儲存與讀回（**待人工**：重新載入擴充功能後，在搜尋頁改一項設定、儲存、重新整理後確認仍在）
+- 註：PoC 的 `canonicalUrl` 是 content script IIFE 內的 closure，`scripts/gen-golden.mjs` 從 `content.js` 取出原始碼（並確認與 `picker.js` 的那份一致）產生 golden，寫入 `test/fixtures/poc/shared.json`
 **依賴**：T3
 **檔案**：`src/shared/{constants,settings,url}.ts`、`src/core/policy/denylist.ts`、`src/shared/platform/settings_store.ts` + 測試、`src/legacy/shared_shim.ts`
 **Scope**：M

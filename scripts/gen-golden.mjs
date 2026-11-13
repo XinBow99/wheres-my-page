@@ -10,9 +10,10 @@
  */
 
 import 'fake-indexeddb/auto';
-import {mkdirSync, writeFileSync} from 'node:fs';
+import {mkdirSync, readFileSync, writeFileSync} from 'node:fs';
+import {tmpdir} from 'node:os';
 import {dirname, join} from 'node:path';
-import {fileURLToPath} from 'node:url';
+import {fileURLToPath, pathToFileURL} from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = join(ROOT, 'test', 'fixtures', 'poc');
@@ -451,8 +452,85 @@ async function genStore() {
   });
 }
 
+// ---------------------------------------------------------------------------
+// shared.js constants, and canonicalUrl from content.js / picker.js.
+// ---------------------------------------------------------------------------
+
+/**
+ * Loads the PoC canonicalUrl. It is a closure inside the content script
+ * IIFEs, so its source is extracted (identical in both files), with
+ * location.href turned into a parameter.
+ */
+async function loadCanonicalUrl() {
+  const FN = /function canonicalUrl\(\) \{\n[\s\S]*?\n {2}\}/;
+  const [fromContent] = readFileSync(join(ROOT, 'content.js'), 'utf8').match(
+    FN,
+  );
+  const [fromPicker] = readFileSync(join(ROOT, 'picker.js'), 'utf8').match(FN);
+  if (fromContent !== fromPicker) {
+    throw new Error('gen-golden: content.js and picker.js canonicalUrl differ');
+  }
+  const source = fromContent
+    .replace('function canonicalUrl()', 'export function canonicalUrl(href)')
+    .replace('new URL(location.href)', 'new URL(href)');
+  const file = join(tmpdir(), 'semhist-golden-canonical-url.mjs');
+  writeFileSync(file, source + '\n');
+  return (await import(pathToFileURL(file).href)).canonicalUrl;
+}
+
+async function genShared() {
+  const shared = await import('../shared.js');
+  const canonicalUrl = await loadCanonicalUrl();
+  const long = '長'.repeat(250);
+  const urls = [
+    'https://example.com/a?b=1#frag',
+    'https://example.com/?utm_source=x&utm_medium=y&id=3',
+    'https://example.com/?fbclid=abc&gclid=def&fbclid_extra=1&q=keep',
+    'https://example.com/?ref=hn&ref_src=twsrc&referrer=keep&refs=keep',
+    'https://example.com/?a=1&ref=x&a=2#top',
+    'https://EXAMPLE.com:443/Path/../x?utm_=1',
+    'http://例子.測試/路徑?utm_campaign=秋季',
+    'https://example.com/#/spa/route',
+  ];
+  write('shared.json', {
+    models: shared.MODELS,
+    visionModel: shared.VISION_MODEL,
+    dim: shared.DIM,
+    presetCategories: shared.PRESET_CATEGORIES,
+    defaultDenylist: shared.DEFAULT_DENYLIST,
+    defaults: shared.DEFAULTS,
+    prompt: {
+      query: ['上週看的 flash-attn', long, 42, ''].map(q => ({
+        q,
+        out: shared.PROMPT.query(q),
+      })),
+      doc: [
+        ['vLLM KV cache', '內文'],
+        ['', '沒有標題'],
+        [undefined, 'undefined title'],
+        [long, 'long title'],
+      ].map(([title, text]) => ({
+        title: title ?? null,
+        text,
+        out: shared.PROMPT.doc(title, text),
+      })),
+      category: [
+        ['AI／機器學習', '大型語言模型'],
+        ['只有名稱', ''],
+        [long, long],
+      ].map(([name, description]) => ({
+        name,
+        description,
+        out: shared.PROMPT.category(name, description),
+      })),
+    },
+    canonicalUrl: urls.map(url => ({url, out: canonicalUrl(url)})),
+  });
+}
+
 await genText();
 await genMath();
 await genDenylist();
 await genDwell();
 await genStore();
+await genShared();

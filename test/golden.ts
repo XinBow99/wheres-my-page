@@ -141,6 +141,33 @@ export interface StoreGolden {
   scoreWhisper: GoldenScore[];
 }
 
+/** Contents of denylist.json: PoC background.js isDenied. */
+export interface DenylistGolden {
+  /** PoC DEFAULT_DENYLIST. */
+  defaultDenylist: string;
+  /** A custom denylist with blank and padded lines. */
+  custom: string;
+  /** isDenied(url, list) for both lists. */
+  cases: Array<{url: string; defaultDenied: boolean; customDenied: boolean}>;
+}
+
+/** Contents of shared.json: PoC shared.js constants and canonicalUrl. */
+export interface SharedGolden {
+  models: Record<string, {label: string; url: string}>;
+  visionModel: string;
+  dim: number;
+  presetCategories: Array<Record<string, string>>;
+  defaultDenylist: string;
+  defaults: Record<string, unknown>;
+  prompt: {
+    query: Array<{q: string | number; out: string}>;
+    doc: Array<{title: string | null; text: string; out: string}>;
+    category: Array<{name: string; description: string; out: string}>;
+  };
+  /** content.js / picker.js canonicalUrl(url). */
+  canonicalUrl: Array<{url: string; out: string}>;
+}
+
 /**
  * Reads and parses one fixture file.
  *
@@ -157,6 +184,12 @@ export const textGolden = readFixture('text.json') as TextGolden;
 
 /** PoC store.js pure-function golden outputs. */
 export const mathGolden = readFixture('math.json') as MathGolden;
+
+/** PoC denylist golden outputs. */
+export const denylistGolden = readFixture('denylist.json') as DenylistGolden;
+
+/** PoC shared constants and canonicalUrl golden outputs. */
+export const sharedGolden = readFixture('shared.json') as SharedGolden;
 
 /** PoC VectorIndex golden database and outputs. */
 export const storeGolden = readFixture('store.json') as StoreGolden;

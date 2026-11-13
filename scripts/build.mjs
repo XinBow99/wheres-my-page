@@ -43,7 +43,6 @@ const POC_FILES = [
   'search.css',
   'search.html',
   'search.js',
-  'shared.js',
   'store.js',
 ];
 
@@ -52,7 +51,10 @@ const POC_FILES = [
  * Each shim keeps the PoC file's name and export names, so the remaining PoC
  * files import the new code without changes (docs/tasks/plan.md decision 1).
  */
-const LEGACY_SHIMS = [['chunk_shim.ts', 'chunk.js']];
+const LEGACY_SHIMS = [
+  ['chunk_shim.ts', 'chunk.js'],
+  ['shared_shim.ts', 'shared.js'],
+];
 
 /** Oldest Chrome the manifest allows (minimum_chrome_version). */
 const CHROME_TARGET = 'chrome116';
