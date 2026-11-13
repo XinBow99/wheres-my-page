@@ -10,7 +10,7 @@
   - 使用者回報 Checkpoint 0 第 1、3、4 項通過（console 無錯誤、IndexedDB 有資料、中文搜尋命中）
   - T4：〈台北101〉（未索引過）停留後出現 ✓，面板顯示「已索引（32 段）」與自動分類標籤
   - **還差一項待人工**（Claude in Chrome 無法開啟 `chrome-extension://` 頁面）：搜尋頁改一項設定、儲存、重新整理確認仍在（T6）
-- Phase 2：T8 完成；下一步 T9（`messaging/validate`）→ T10；Phase 2 結束有一次人工 review（Checkpoint 2，review `contract.ts`）
+- Phase 2：T8、T9 完成；下一步 T10（`messaging/client`、`router`、`progress`）；Phase 2 結束有一次人工 review（Checkpoint 2，review `contract.ts`）
 
 計畫與決策見 `docs/tasks/plan.md`。每個任務另外還要通過 `docs/tasks/plan.md`「每個任務的共同驗證」。
 Scope：XS = 1 檔、S = 1–2 檔、M = 3–5 檔。測試檔與原始碼放在同一目錄（`*_test.ts`）。
@@ -151,8 +151,10 @@ Scope：XS = 1 檔、S = 1–2 檔、M = 3–5 檔。測試檔與原始碼放在
 ### T9：`messaging/validate`（D2：手寫型別守衛）
 **說明**：每種 request 一個 `isXxxRequest(x: unknown)`，加上 `validateEnvelope`。
 **驗收**
-- [ ] 表格驅動測試：每種訊息至少涵蓋合法、缺欄位、型別錯誤、多餘欄位、超大字串（例如 text > 30000）、`NaN`／`Infinity`
-- [ ] 錯誤的 `v`（版本）回傳 `INVALID_MESSAGE`
+- [x] 表格驅動測試：每種訊息至少涵蓋合法、缺欄位、型別錯誤、多餘欄位、超大字串（例如 text > 30000）、`NaN`／`Infinity`（三個接收端共 42 種訊息，依每個欄位自動產生變體，`validate_test.ts` 共 638 個案例；每個字串欄位都測「剛好上限通過、上限 +1 拒絕」）
+- [x] 錯誤的 `v`（版本）回傳 `INVALID_MESSAGE`（另外也拒絕：target 不符、未知 type（含 `toString`、`__proto__`）、多餘的 envelope 欄位、v0.5.0 格式的訊息）
+- 註：上限：URL 8192、標題／備註／圖說／selector 4096、查詢 1000、id／網域／顏色 256、原圖 data URL 8 MB、截圖 32 MB；歷史匯入最多 10000 筆、搜尋 k ≤ 500。`settings.sync` 的 `model` 只接受 `MODELS` 的 key，`tagMinScore` 限 [0, 1]
+- 註：mutation 實測：拿掉「拒絕多餘欄位」後有 45 個測試失敗
 **驗證**：`npm test -- shared/messaging/validate`
 **依賴**：T8
 **檔案**：`src/shared/messaging/validate.ts` + 測試

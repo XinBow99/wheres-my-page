@@ -48,7 +48,7 @@
 
 ### Phase 2：通訊契約
 - [x] T8：`shared/errors` + `messaging/contract`（全部訊息型別、JSON 約束、`allowedFrom`）
-- [ ] T9：`messaging/validate`（手寫型別守衛，D2）
+- [x] T9：`messaging/validate`（手寫型別守衛，D2）
 - [ ] T10：`messaging/client`、`router`、`progress`（timeout、重試、發送者分級、Port）
 - [ ] **Checkpoint 2（人工介面 review）**：你 review `contract.ts`，確認後才進入 Phase 3
 
