@@ -119,3 +119,8 @@ T1 → T2 → T3 ─┬─ T4 ─┐
 
 1. **CI**：要不要在 Phase 0 加 GitHub Actions，在 push／PR 時跑 `check:task`？目前規劃是不加，只在本機執行。
 2. **推送時機**：分支 `refactor/architecture` 要在每個 Checkpoint 推到 `origin`，還是全部完成後再推？
+3. **MediaPipe 使用統計（2026-11-13 發現，待使用者決定）**：T5b 的隱私檢查先以靜態方式查過套件。`@mediapipe/tasks-retrieval@1.2.3`（PoC 與目前的 `dist/` 都在用）和 `@mediapipe/tasks-decision@1.2.3` 的 bundle 都內建同一個 logger：`UniversalEmbedder`、`SemanticRetriever`、`DecisionMaker` 一建立就無條件啟用，每 60 秒與 `close()` 時以 `fetch` POST 到 `https://odml.pa.googleapis.com/v1/log`（附套件內建的 Google API key，`credentials` 不帶 cookie）。內容是作業系統類型、套件版本、任務類型、初始化耗時與呼叫次數／延遲統計，**不含網頁文字或向量**；官方 README 的 Privacy Notice 也寫明會送出 metrics。沒有關閉的 API 選項。manifest 有 `<all_urls>` 且 CSP 沒有 `connect-src`，所以這些請求在擴充功能裡實際會送出。這不是重構新增的請求，而是 v0.5.0 就有，但與 CONSTRAINTS「除了模型權重與使用者主動索引的圖片，不得有其他網路請求」以及商店說明「網頁內容不離開你的電腦」的精神不一致。選項：
+   - **A（建議）**：offscreen 啟動時包一層 `fetch`，對 `odml.pa.googleapis.com` 直接拒絕（不會真的發出請求；logger 第一次失敗後會自己停掉計時器）。改動小、可單元測試、不需要新權限。可在 T12 做，或先在 build 對 `dist/offscreen.html` 加一段前置 script，讓 PoC 階段就生效
+   - B：`declarativeNetRequest` 靜態規則擋掉這個網域。需要新權限，安裝時會多一條權限警告
+   - C：CSP `connect-src` 白名單。不可行：offscreen 要從任意網址抓使用者索引的圖片原檔，白名單只能開到 `https:`，擋不到這個網域
+   - D：保留現狀，改為在說明與隱私權政策中揭露

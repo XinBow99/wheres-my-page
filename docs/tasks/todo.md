@@ -7,6 +7,7 @@
 - **已決定**：`dist/` 使用固定 extension ID `iogmdngpbdmhfphilnennjocdhclneok`（build 注入 manifest `key`，見 `docs/tasks/plan.md` 決策 6）。repo 根目錄 PoC 的舊索引不搬移，在新 ID 下重建
 - **下一步：Checkpoint 0 的人工驗收**：`npm ci && npm run build`，在 `chrome://extensions` 停用從 repo 根目錄載入的舊版，以「載入未封裝項目」選擇 `dist/`，確認 ID 是 `iogmdngpbdmhfphilnennjocdhclneok`，再走過 `docs/CONSTRAINTS.md` 的手動驗收 1–4 項（第 5 項此時不適用：新 ID 下沒有舊資料）。這次建立的索引要保留，作為 T11／Checkpoint 3 的 v0.5.0 相容資料
 - Checkpoint 0 第 2 項已在使用者的 Chrome 通過（ID `iogm…`，〈人工智慧〉32 chunks、〈珍珠奶茶〉30 chunks）；第 1、3、4 項待使用者回報
+- **需要使用者決定**：MediaPipe 會送使用統計到 `odml.pa.googleapis.com`（PoC 就有，見 `docs/tasks/plan.md` Open Question 3）。依 T5b 的規定，T5b 在真實 Chrome 的實驗先暫停，等這一題決定後再做
 - **T4 待人工驗收**：`dist/chunk.js` 已改由 esbuild 從 `src/legacy/chunk_shim.ts` 產出。需在 `chrome://extensions` 按 `iogm…` 卡片的重新載入（↻），再開一個未索引過的中文頁面，確認徽章出現 ✓ 與合理的 chunk 數
 
 計畫與決策見 `docs/tasks/plan.md`。每個任務另外還要通過 `docs/tasks/plan.md`「每個任務的共同驗證」。
@@ -88,7 +89,7 @@ Scope：XS = 1 檔、S = 1–2 檔、M = 3–5 檔。測試檔與原始碼放在
 - [ ] 三種做法在評估集上的準確率（top-1 與多標籤 F1）記錄到 `docs/tasks/plan.md` 決策 7
 - [ ] 輸入長度：確認 `maxNumTokens` 的實際上限，比較「標題 + 開頭一段」與「逐段 `evaluateChoiceBatch` 再合併」的準確率與耗時
 - [ ] 成本實測：`dist/` 增加的大小、兩套 runtime 同時載入時 offscreen 的記憶體與 GPU 記憶體、每頁分類耗時
-- [ ] 隱私：在 Network 面板確認 `tasks-decision` 與 `tasks-retrieval` 有沒有送出 metrics 請求；有的話先停下來，與使用者討論（CONSTRAINTS「不得新增網路請求」）
+- [ ] 隱私：（靜態檢查已發現會送出，見 `docs/tasks/plan.md` Open Question 3；待使用者決定）在 Network 面板確認 `tasks-decision` 與 `tasks-retrieval` 有沒有送出 metrics 請求；有的話先停下來，與使用者討論（CONSTRAINTS「不得新增網路請求」）
 - [ ] 提出手動標籤的處理方式（PoC 會把手動標記的頁面加進分類原型；DecisionMaker 只看分類描述），由使用者決定
 - [ ] UI 上的「分類相似度」改顯示校準後的機率，而不是原始 cosine（實作排在 T24）
 - [ ] 順帶量測 `tasks-retrieval` 的 `DefaultTextChunker`（模型真實的 tokenizer）：golden corpus 中每個 chunk 的真實 token 數 vs PoC `estimateTokens` 的估計值。若 PoC 會低估中文 token 數，T12 改用 `DefaultTextChunker` 切塊，並移除「縮短 40% 重試」的補救機制。不採用 `SemanticRetriever` 整套流程：它不支援 EmbeddingGemma 的 query／doc task prompt，也沒有 PoC 的混合排序與 IndexedDB 持久化
