@@ -6,11 +6,11 @@
 - 已完成：Phase 0（T1–T3）、Phase 1（T4–T7）。`dist/chunk.js`（T4）與 `dist/shared.js`（T6）已改由 `src/legacy` shim 產出，其餘仍是 PoC 原檔
 - **已決定**：`dist/` 使用固定 extension ID `iogmdngpbdmhfphilnennjocdhclneok`（決策 6）；自動分類改用 `tasks-decision`（決策 7，先做 T5b 實驗）
 - **需要使用者決定**：MediaPipe 會送使用統計到 `odml.pa.googleapis.com`（PoC 就有，見 `docs/tasks/plan.md` Open Question 3，建議選項 A）。T5b 在真實 Chrome 的實驗等這一題決定後再做
-- **待使用者在 Chrome 操作**（Claude in Chrome 無法開啟 `chrome://extensions`，無法自行重新載入擴充功能）：
-  1. 在 `chrome://extensions` 按 `iogm…` 卡片的重新載入（↻），讓 shim 版的 `chunk.js`／`shared.js` 生效
-  2. Checkpoint 0 第 1、3、4 項（第 2 項已通過：〈人工智慧〉32 chunks、〈珍珠奶茶〉30 chunks）
-  3. 重新載入後：開一篇未索引過的中文長文確認 ✓（T4）；搜尋頁改一項設定、儲存、重新整理確認仍在（T6）；中文搜尋命中（Checkpoint 1）
-- 下一步：上面 Chrome 驗收通過即完成 Checkpoint 1，接著 Phase 2（T8 通訊契約）；Phase 2 結束有一次人工 review
+- **Chrome 驗收**（重新載入 shim 版 `dist/` 之後）：
+  - 使用者回報 Checkpoint 0 第 1、3、4 項通過（console 無錯誤、IndexedDB 有資料、中文搜尋命中）
+  - T4：〈台北101〉（未索引過）停留後出現 ✓，面板顯示「已索引（32 段）」與自動分類標籤
+  - **還差一項待人工**（Claude in Chrome 無法開啟 `chrome-extension://` 頁面）：搜尋頁改一項設定、儲存、重新整理確認仍在（T6）
+- 下一步：Phase 2（T8 通訊契約）；Phase 2 結束有一次人工 review
 
 計畫與決策見 `docs/tasks/plan.md`。每個任務另外還要通過 `docs/tasks/plan.md`「每個任務的共同驗證」。
 Scope：XS = 1 檔、S = 1–2 檔、M = 3–5 檔。測試檔與原始碼放在同一目錄（`*_test.ts`）。
@@ -23,7 +23,7 @@ Scope：XS = 1 檔、S = 1–2 檔、M = 3–5 檔。測試檔與原始碼放在
 **說明**：建立 `package.json`（版本全部固定），加入 `@mediapipe/tasks-retrieval@1.2.3` 與 esbuild。`scripts/build.mjs` 先把 PoC 檔案、icons、manifest 原樣複製到 `dist/`，再從 `node_modules` 複製 `retrieval_bundle.mjs` → `dist/lib/`、`wasm/*` → `dist/wasm/`。`scripts/verify-dist.mjs` 檢查 manifest 引用的每個檔案都存在，並輸出各檔案大小。
 **驗收**
 - [x] `npm ci && npm run build` 產出 `dist/`；`node scripts/verify-dist.mjs` 結果為 exit 0（缺檔案時 exit 1、沒有 dist 時 exit 2，皆已驗證）
-- [ ] 從 `dist/` 載入的擴充功能行為與 v0.5.0 相同（**待人工在 Chrome 驗證，併入 Checkpoint 0**）。build 只從 `node_modules` 讀取 MediaPipe，不依賴根目錄的 `lib/`、`wasm/`
+- [x] 從 `dist/` 載入的擴充功能行為與 v0.5.0 相同（使用者在 Chrome 驗證 Checkpoint 0 通過）。build 只從 `node_modules` 讀取 MediaPipe，不依賴根目錄的 `lib/`、`wasm/`
 - [x] `dist/wasm/*.wasm` 與 `dist/lib/retrieval_bundle.mjs` 的 SHA-256 與先前 vendored 版本一致
 - 註：esbuild 延到第一個需要打包的任務（T4）才加入，避免安裝了卻沒用到的相依套件
 **驗證**：手動驗收五項（中文頁索引 → IndexedDB → 中文查詢命中）
@@ -55,8 +55,8 @@ Scope：XS = 1 檔、S = 1–2 檔、M = 3–5 檔。測試檔與原始碼放在
 **Scope**：M
 
 ### ✅ Checkpoint 0
-- [ ] 每一項檢查都已證明「會擋」
-- [ ] `dist/` 行為與 v0.5.0 相同
+- [x] 每一項檢查都已證明「會擋」（T2、T3）
+- [x] `dist/` 行為與 v0.5.0 相同
 - [ ] 與你 review 工具鏈選擇後再繼續
 
 ---
@@ -68,7 +68,7 @@ Scope：XS = 1 檔、S = 1–2 檔、M = 3–5 檔。測試檔與原始碼放在
 **驗收**
 - [x] golden corpus（中文長文、中英混合、emoji、超長單段、只有控制字元）的切塊結果與 PoC 逐字相同
 - [x] 不變量測試：每個 chunk 的 `estimateTokens` ≤ budget；chunk 數 ≤ `maxChunks`；相鄰 chunk 之間有重疊
-- [ ] 在 shim 版本下，真實 Chrome 中的中文頁面索引成功，chunk 數與 PoC 相同（**待重新載入擴充功能後驗證**；已用 16,000 組隨機輸入比對 PoC `chunk.js` 與 `dist/chunk.js`，輸出完全相同）
+- [x] 在 shim 版本下，真實 Chrome 中的中文頁面索引成功，chunk 數與 PoC 相同（〈台北101〉32 段；chunk 數與 PoC 相同由差異測試保證：已用 16,000 組隨機輸入比對 PoC `chunk.js` 與 `dist/chunk.js`，輸出完全相同）
 **驗證**：`npm test -- core/text`；手動驗收 2–4 項
 **依賴**：T3
 **檔案**：`src/core/text/{tokens,preprocess,chunk}.ts` + 測試、`src/legacy/chunk_shim.ts`、`scripts/build.mjs`
@@ -106,7 +106,7 @@ Scope：XS = 1 檔、S = 1–2 檔、M = 3–5 檔。測試檔與原始碼放在
 - [x] denylist：glob、hostname 與路徑、非 http(s)、無效 URL 等情況的結果與 PoC 相同
 - [x] `parseSettings` 對缺欄位、型別錯誤、超出範圍的值都回傳合法設定（表格驅動測試）
 - [x] `canonicalUrl` 會移除 hash 與 utm／fbclid／gclid／ref 參數，結果與 PoC 相同
-**驗證**：`npm test -- shared core/policy`；手動確認搜尋頁的設定可以儲存與讀回（**待人工**：重新載入擴充功能後，在搜尋頁改一項設定、儲存、重新整理後確認仍在）
+**驗證**：`npm test -- shared core/policy`；手動確認搜尋頁的設定可以儲存與讀回（**待人工**：在搜尋頁改一項設定、儲存、重新整理後確認仍在。背景頁已透過 shim 版 `shared.js` 正常讀取設定並完成索引）
 - 註：PoC 的 `canonicalUrl` 是 content script IIFE 內的 closure，`scripts/gen-golden.mjs` 從 `content.js` 取出原始碼（並確認與 `picker.js` 的那份一致）產生 golden，寫入 `test/fixtures/poc/shared.json`
 **依賴**：T3
 **檔案**：`src/shared/{constants,settings,url}.ts`、`src/core/policy/denylist.ts`、`src/shared/platform/settings_store.ts` + 測試、`src/legacy/shared_shim.ts`
@@ -123,8 +123,8 @@ Scope：XS = 1 檔、S = 1–2 檔、M = 3–5 檔。測試檔與原始碼放在
 **Scope**：S
 
 ### ✅ Checkpoint 1
-- [ ] `check:task` 綠；core 覆蓋率 ≥ 80%
-- [ ] 以 shim 版本的 `dist/` 做中文索引與搜尋，結果與 PoC 一致
+- [x] `check:task` 綠；core 覆蓋率 ≥ 80%（100%）
+- [x] 以 shim 版本的 `dist/` 做中文索引與搜尋，結果與 PoC 一致（〈台北101〉索引成功、使用者回報中文搜尋命中）
 
 ---
 
