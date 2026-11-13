@@ -35,7 +35,6 @@ const MEDIAPIPE = join(ROOT, 'node_modules', '@mediapipe', 'tasks-retrieval');
 const POC_FILES = [
   'background.js',
   'content.js',
-  'offscreen.html',
   'offscreen.js',
   'picker.js',
   'popup.html',
@@ -55,6 +54,9 @@ const LEGACY_SHIMS = [
   ['chunk_shim.ts', 'chunk.js'],
   ['shared_shim.ts', 'shared.js'],
 ];
+
+/** Classic script that blocks MediaPipe usage metrics in the offscreen document. */
+const METRICS_GUARD = ['metrics_guard_entry.ts', 'metrics_guard.js'];
 
 /** Oldest Chrome the manifest allows (minimum_chrome_version). */
 const CHROME_TARGET = 'chrome116';
@@ -134,6 +136,37 @@ async function buildShims() {
   }
 }
 
+/**
+ * Bundles the metrics guard and writes dist/offscreen.html: the PoC page
+ * with the guard loaded before offscreen.js. A classic script runs before
+ * any module script, so fetch is wrapped before MediaPipe is imported
+ * (docs/tasks/plan.md Open Question 3, option A).
+ */
+async function buildOffscreenPage() {
+  const [entry, out] = METRICS_GUARD;
+  await esbuild({
+    entryPoints: [join(ROOT, 'src', 'legacy', entry)],
+    outfile: join(DIST, out),
+    bundle: true,
+    format: 'iife',
+    target: CHROME_TARGET,
+    logLevel: 'warning',
+  });
+  const anchor = '<script type="module" src="offscreen.js"></script>';
+  const html = readFileSync(join(ROOT, 'offscreen.html'), 'utf8');
+  if (!html.includes(anchor)) {
+    throw new Error(`build: offscreen.html has no ${anchor}`);
+  }
+  writeFileSync(
+    join(DIST, 'offscreen.html'),
+    html.replace(
+      anchor,
+      `<script src="${out}"></script>
+${anchor}`,
+    ),
+  );
+}
+
 async function build() {
   rmSync(DIST, {recursive: true, force: true});
   mkdirSync(DIST, {recursive: true});
@@ -143,6 +176,7 @@ async function build() {
     copyFile(join(ROOT, file), join(DIST, file));
   }
   await buildShims();
+  await buildOffscreenPage();
   copyDir(join(ROOT, 'icons'), join(DIST, 'icons'));
 
   if (!existsSync(MEDIAPIPE)) {

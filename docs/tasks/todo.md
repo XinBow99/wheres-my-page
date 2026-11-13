@@ -5,7 +5,7 @@
 - 分支：`refactor/architecture`（未推送）
 - 已完成：Phase 0（T1–T3）、Phase 1（T4–T7）。`dist/chunk.js`（T4）與 `dist/shared.js`（T6）已改由 `src/legacy` shim 產出，其餘仍是 PoC 原檔
 - **已決定**：`dist/` 使用固定 extension ID `iogmdngpbdmhfphilnennjocdhclneok`（決策 6）；自動分類改用 `tasks-decision`（決策 7，先做 T5b 實驗）
-- **需要使用者決定**：MediaPipe 會送使用統計到 `odml.pa.googleapis.com`（PoC 就有，見 `docs/tasks/plan.md` Open Question 3，建議選項 A）。T5b 在真實 Chrome 的實驗等這一題決定後再做
+- **已決定（2026-11-14）**：MediaPipe 使用統計採選項 A（`docs/tasks/plan.md` Open Question 3）。`src/offscreen/metrics_guard.ts` 在 offscreen 包一層 `fetch`，拒絕送往 `odml.pa.googleapis.com` 的請求；build 把它打包成 `dist/metrics_guard.js`，並在 `dist/offscreen.html` 中排在 `offscreen.js` 之前載入，PoC 階段就生效。**待人工**：重新載入擴充功能後，在 `chrome://extensions` 檢查 offscreen.html 的 Network 面板，搜尋一次後確認沒有 `odml.pa.googleapis.com` 的請求。T5b 的 Chrome 實驗可以恢復
 - **Chrome 驗收**（重新載入 shim 版 `dist/` 之後）：
   - 使用者回報 Checkpoint 0 第 1、3、4 項通過（console 無錯誤、IndexedDB 有資料、中文搜尋命中）
   - T4：〈台北101〉（未索引過）停留後出現 ✓，面板顯示「已索引（32 段）」與自動分類標籤
@@ -91,7 +91,7 @@ Scope：XS = 1 檔、S = 1–2 檔、M = 3–5 檔。測試檔與原始碼放在
 - [ ] 三種做法在評估集上的準確率（top-1 與多標籤 F1）記錄到 `docs/tasks/plan.md` 決策 7
 - [ ] 輸入長度：確認 `maxNumTokens` 的實際上限，比較「標題 + 開頭一段」與「逐段 `evaluateChoiceBatch` 再合併」的準確率與耗時
 - [ ] 成本實測：`dist/` 增加的大小、兩套 runtime 同時載入時 offscreen 的記憶體與 GPU 記憶體、每頁分類耗時
-- [ ] 隱私：（靜態檢查已發現會送出，見 `docs/tasks/plan.md` Open Question 3；待使用者決定）在 Network 面板確認 `tasks-decision` 與 `tasks-retrieval` 有沒有送出 metrics 請求；有的話先停下來，與使用者討論（CONSTRAINTS「不得新增網路請求」）
+- [ ] 隱私：（靜態檢查已發現會送出；使用者選了 Open Question 3 選項 A，`metrics_guard` 已擋下 `tasks-retrieval` 的請求。lab 頁面也要載入同一個 guard）在 Network 面板確認 `tasks-decision` 與 `tasks-retrieval` 有沒有送出 metrics 請求；有的話先停下來，與使用者討論（CONSTRAINTS「不得新增網路請求」）
 - [ ] 提出手動標籤的處理方式（PoC 會把手動標記的頁面加進分類原型；DecisionMaker 只看分類描述），由使用者決定
 - [ ] UI 上的「分類相似度」改顯示校準後的機率，而不是原始 cosine（實作排在 T24）
 - [ ] 順帶量測 `tasks-retrieval` 的 `DefaultTextChunker`（模型真實的 tokenizer）：golden corpus 中每個 chunk 的真實 token 數 vs PoC `estimateTokens` 的估計值。若 PoC 會低估中文 token 數，T12 改用 `DefaultTextChunker` 切塊，並移除「縮短 40% 重試」的補救機制。不採用 `SemanticRetriever` 整套流程：它不支援 EmbeddingGemma 的 query／doc task prompt，也沒有 PoC 的混合排序與 IndexedDB 持久化
