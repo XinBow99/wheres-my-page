@@ -355,6 +355,7 @@ Scope：XS = 1 檔、S = 1–2 檔、M = 3–5 檔。測試檔與原始碼放在
 **驗收**
 - [ ] README 中與搜尋頁相關的功能全部可用（匯入紀錄、門檻、分類 CRUD、排除清單、清空索引）
 - [ ] 設定表單有 `<label>` 關聯、錯誤以 `aria-describedby` 呈現
+- [ ] 使用者需求（2026-11-14）：搜尋頁上方的分類列，每個分類 chip 旁有刪除鈕，直接刪除整個分類（`category.delete`），不必進「管理分類」。以 `<dialog>` 確認並說明「頁面不會被刪除」；按鈕有可讀的 `aria-label`（例如「刪除分類 AI／機器學習」）；刪除後分類列與結果卡片上的標籤立即更新。只在完整搜尋頁出現，Side Panel 窄版不放（避免誤觸）
 **驗證**：`npm test -- ui`；手動
 **依賴**：T23
 **檔案**：`src/ui/search/{search.html,main.ts}`、`src/ui/search/{settings_panel,category_manager}.ts`
