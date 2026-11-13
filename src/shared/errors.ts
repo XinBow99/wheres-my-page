@@ -115,6 +115,22 @@ export function toWireError(e: unknown): WireError {
 }
 
 /**
+ * Whether `x` is a WireError (e.g. inside a reply from another context).
+ *
+ * @param x Value.
+ * @return True for `{code, message, retryable}` with a known code.
+ */
+export function isWireError(x: unknown): x is WireError {
+  if (typeof x !== 'object' || x === null) return false;
+  const e = x as Record<string, unknown>;
+  return (
+    ERROR_CODES.some(code => code === e['code']) &&
+    typeof e['message'] === 'string' &&
+    typeof e['retryable'] === 'boolean'
+  );
+}
+
+/**
  * Successful result.
  *
  * @param data Reply data.

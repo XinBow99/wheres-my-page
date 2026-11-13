@@ -10,7 +10,7 @@
   - 使用者回報 Checkpoint 0 第 1、3、4 項通過（console 無錯誤、IndexedDB 有資料、中文搜尋命中）
   - T4：〈台北101〉（未索引過）停留後出現 ✓，面板顯示「已索引（32 段）」與自動分類標籤
   - **還差一項待人工**（Claude in Chrome 無法開啟 `chrome-extension://` 頁面）：搜尋頁改一項設定、儲存、重新整理確認仍在（T6）
-- Phase 2：T8、T9 完成；下一步 T10（`messaging/client`、`router`、`progress`）；Phase 2 結束有一次人工 review（Checkpoint 2，review `contract.ts`）
+- Phase 2：T8–T10 完成。**下一步是 Checkpoint 2（人工 review）**：請使用者 review `src/shared/messaging/contract.ts` 與 `src/shared/errors.ts`（設計選擇列在 T8、T9 下方），確認後才開始 Phase 3
 
 計畫與決策見 `docs/tasks/plan.md`。每個任務另外還要通過 `docs/tasks/plan.md`「每個任務的共同驗證」。
 Scope：XS = 1 檔、S = 1–2 檔、M = 3–5 檔。測試檔與原始碼放在同一目錄（`*_test.ts`）。
@@ -163,9 +163,12 @@ Scope：XS = 1 檔、S = 1–2 檔、M = 3–5 檔。測試檔與原始碼放在
 ### T10：`messaging/client`、`router`、`progress`
 **說明**：`send(target, type, payload, opts)`：timeout、只對 `retryable` 錯誤做指數退避、把 `chrome.runtime.lastError` 與「沒有接收端」正規化為 `NO_RECEIVER`。`createRouter(handlers)`：驗證 → 檢查 `sender.id` → 依來源分級（`allowedFrom`）→ 呼叫 handler → 包成 `Result`，一律 `return true`。`progress.ts`：Port 串流，`onDisconnect` 處理冪等。
 **驗收**
-- [ ] 用 fake `chrome.runtime` 測試：逾時 → `TIMEOUT`；不可重試的錯誤不重試；可重試錯誤在 N 次後放棄
-- [ ] content script 發送破壞性訊息 → `DENIED`；外部擴充功能（`sender.id` 不符）→ 拒絕
-- [ ] handler 拋出例外 → `INTERNAL`，原始訊息保留在 `message`，不會吞掉
+- [x] 用 fake `chrome.runtime` 測試：逾時 → `TIMEOUT`；不可重試的錯誤不重試；可重試錯誤在 N 次後放棄（預設重試 4 次，退避 150／300／600／1200 ms；整體逾時後不再送出下一次嘗試）
+- [x] content script 發送破壞性訊息 → `DENIED`；外部擴充功能（`sender.id` 不符）→ 拒絕（`PRIVILEGED_MESSAGES` 逐一測試；offscreen 只接受 service worker 發送）
+- [x] handler 拋出例外 → `INTERNAL`，原始訊息保留在 `message`，不會吞掉（`AppError` 保留自己的 code）
+- 註：`send`／`sendToTab` 一律回傳 `Result`，不會 reject。傳輸錯誤的對應：「Receiving end does not exist」→ `NO_RECEIVER`（可重試）；「message port closed」與「Extension context invalidated」→ `NO_RECEIVER`（不重試）；沒有回覆 → `NO_RECEIVER`（可重試）；格式不對的回覆（例如 v0.5.0 的 `{ok, chunks}`）→ `INTERNAL`
+- 註：router 依 `sender.url` 分辨來源：擴充功能 origin 且等於 service worker 的 URL → `background`；其他擴充功能頁 → `extension-page`；非擴充功能 URL 且有 `sender.tab` → `content-script`；其餘拒絕。`target` 不是自己的訊息直接忽略（`return false`），讓其他 context 的 router 回覆
+- 註：`progress.ts`：Port 名稱 `progress:<model|import|images>`，`ProgressHub` 只接受本擴充功能開的 port；取消訂閱與 `onDisconnect` 都是冪等的；對已關閉的 port 發送時把它移除
 **驗證**：`npm test -- shared/messaging`
 **依賴**：T9
 **檔案**：`src/shared/messaging/{client,router,progress}.ts` + 測試、`test/fakes/chrome_runtime.ts`

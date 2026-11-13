@@ -1,6 +1,13 @@
 import {describe, expect, it} from 'vitest';
 
-import {AppError, ERROR_CODES, err, ok, toWireError} from './errors';
+import {
+  AppError,
+  ERROR_CODES,
+  err,
+  isWireError,
+  ok,
+  toWireError,
+} from './errors';
 
 describe('AppError', () => {
   it('only retries NO_RECEIVER by default', () => {
@@ -58,6 +65,22 @@ describe('toWireError', () => {
   it('survives JSON serialization', () => {
     const wire = toWireError(new AppError('NO_RECEIVER', 'offscreen closed'));
     expect(JSON.parse(JSON.stringify(wire))).toEqual(wire);
+  });
+});
+
+describe('isWireError', () => {
+  it('accepts what toWireError produces', () => {
+    expect(isWireError(toWireError(new AppError('DENIED', 'no')))).toBe(true);
+  });
+
+  it.each([
+    ['null', null],
+    ['a string', 'TIMEOUT'],
+    ['an unknown code', {code: 'NOPE', message: 'x', retryable: false}],
+    ['a missing message', {code: 'TIMEOUT', retryable: false}],
+    ['a string retryable', {code: 'TIMEOUT', message: 'x', retryable: 'no'}],
+  ])('rejects %s', (_, x) => {
+    expect(isWireError(x)).toBe(false);
   });
 });
 
