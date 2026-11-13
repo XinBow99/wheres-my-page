@@ -21,6 +21,7 @@
 4. **介面先行，人工 review 集中在介面上**（AWS 文章）：Phase 2 的契約做完後設一個人工 review checkpoint，之後的實作才以這份契約為準。
 5. **高風險項目提前**：資料相容（T11）排在 offscreen 服務之前；MediaPipe／WebGPU 的行為在 T12 就以真實 Chrome 驗證。
 6. **固定 extension ID**（Checkpoint 0 決定）：build 在 `dist/manifest.json` 注入固定的 `key`（`scripts/extension-key.mjs`，只有 public key），ID 為 `iogmdngpbdmhfphilnennjocdhclneok`，不隨 `dist/` 的路徑或電腦改變；`verify-dist` 檢查 key 推導出的 ID。從 repo 根目錄載入的 PoC 是另一個 ID，那份舊索引不搬移，在新 ID 下重建。Checkpoint 0 用 PoC 原樣的 `dist/` 建立的索引，就是之後 T11／Checkpoint 3 驗證「v0.5.0 舊資料相容」用的真實資料。T17 把 manifest 移到 `public/` 時要保留這個 `key`。
+7. **自動分類改用 `@mediapipe/tasks-decision`**（2026-11-13 決定）：PoC 以原始 cosine 搭配絕對門檻（`pickTags`：最高分 ≥ 0.2、比平均高 0.03）決定分類，但短文字套上同一個 prompt 模板後，原始 cosine 普遍落在 0.6–0.7（例：「皇宮」與「黃仁勳」為 68%），描述籠統的分類（新聞時事、生活旅遊、投資理財）又對任何頁面都有偏高的基準分（例：〈珍珠奶茶〉被標成「投資理財」）。改用 DecisionMaker 的 `evaluateChoice`：所有分類一起做 softmax（模型校準的 temperature），並以 `normalizePrior` 扣掉空輸入 `[None]` 的先驗分布。已知代價：`dist/` 多約 26 MB wasm、offscreen 同時跑兩套 runtime、270M 模型在 GPU 上載入兩份。T5 仍是 PoC 行為的原樣搬移（golden 相同）；T5b 先做實驗量測，正式整合放在 T13。
 
 ## 每個任務的共同驗證（Definition of Done）
 

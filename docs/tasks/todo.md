@@ -81,6 +81,21 @@ Scope：XS = 1 檔、S = 1–2 檔、M = 3–5 檔。測試檔與原始碼放在
 **檔案**：`src/core/search/{vector_math,query_terms,ranking}.ts`、`src/core/tagging/{pick_tags,prototypes}.ts` + 測試
 **Scope**：M
 
+### T5b：分類校準實驗（`@mediapipe/tasks-decision`，決策 7）
+**說明**：在決定正式整合方式之前，先用 dev-only 測試頁（`npm run build:lab` 產出到 `dist-lab/`，不進入 `dist/`）在真實 Chrome 中，以 EmbeddingGemma-2 270M 載入 `DecisionMaker`。建立一份有標準答案的評估集 `test/fixtures/tagging_eval.json`（約 30 頁的標題與開頭內文，每頁標上正確分類；包含〈珍珠奶茶〉這類容易誤判的頁面）。比較三種做法：PoC `pickTags`、`evaluateChoice`（`normalizePrior` 關）、`evaluateChoice`（`normalizePrior` 開）。
+**驗收**
+- [ ] 三種做法在評估集上的準確率（top-1 與多標籤 F1）記錄到 `docs/tasks/plan.md` 決策 7
+- [ ] 輸入長度：確認 `maxNumTokens` 的實際上限，比較「標題 + 開頭一段」與「逐段 `evaluateChoiceBatch` 再合併」的準確率與耗時
+- [ ] 成本實測：`dist/` 增加的大小、兩套 runtime 同時載入時 offscreen 的記憶體與 GPU 記憶體、每頁分類耗時
+- [ ] 隱私：在 Network 面板確認 `tasks-decision` 與 `tasks-retrieval` 有沒有送出 metrics 請求；有的話先停下來，與使用者討論（CONSTRAINTS「不得新增網路請求」）
+- [ ] 提出手動標籤的處理方式（PoC 會把手動標記的頁面加進分類原型；DecisionMaker 只看分類描述），由使用者決定
+- [ ] UI 上的「分類相似度」改顯示校準後的機率，而不是原始 cosine（實作排在 T24）
+- [ ] 順帶量測 `tasks-retrieval` 的 `DefaultTextChunker`（模型真實的 tokenizer）：golden corpus 中每個 chunk 的真實 token 數 vs PoC `estimateTokens` 的估計值。若 PoC 會低估中文 token 數，T12 改用 `DefaultTextChunker` 切塊，並移除「縮短 40% 重試」的補救機制。不採用 `SemanticRetriever` 整套流程：它不支援 EmbeddingGemma 的 query／doc task prompt，也沒有 PoC 的混合排序與 IndexedDB 持久化
+**驗證**：實驗紀錄與數字寫入決策 7；使用者確認整合方式後，才修改 T13 與 `docs/CONSTRAINTS.md` 的依賴規則（`src/offscreen` 可以 import `@mediapipe/tasks-decision`，以獨立 commit 進行）
+**依賴**：T5
+**檔案**：`lab/decision_lab.{html,ts}`、`scripts/build-lab.mjs`、`test/fixtures/tagging_eval.json`、`docs/tasks/plan.md`、`package.json`
+**Scope**：M
+
 ### T6：`shared` 基礎 + denylist + `settings_store` + shim `dist/shared.js`
 **說明**：`shared/constants.ts`（MODELS、DIM、PROMPT、預設分類、DB／Cache 名稱）、`shared/settings.ts`（型別、DEFAULTS、`parseSettings(unknown)` 對壞值回退到預設）、`shared/url.ts`（`canonicalUrl`、`domainOf`）、`core/policy/denylist.ts`、`shared/platform/settings_store.ts`（`get`／`update(patch)`／`onChange`，取代 popup 中容易 race 的 read-modify-write）。用 shim 產出 `dist/shared.js`。
 **驗收**
@@ -173,7 +188,7 @@ Scope：XS = 1 檔、S = 1–2 檔、M = 3–5 檔。測試檔與原始碼放在
 **Scope**：M
 
 ### T13：offscreen 文字服務 + router + legacy adapter
-**說明**：`services/index_service.ts`（page、clip）、`search_service.ts`（文字 + 圖片兩個向量空間，查詢快取）、`category_service.ts`（兩個索引同步），`main.ts` 以 `createRouter` 註冊，`legacy_adapter.ts` 把 PoC background 的舊格式訊息（含夾帶的 `model`／`tagMinScore`）轉成新格式。這一步**還不切換 entry**。
+**說明**：`services/index_service.ts`（page、clip）、`search_service.ts`（文字 + 圖片兩個向量空間，查詢快取）、`category_service.ts`（兩個索引同步；自動分類依 T5b 的結論改用 `DecisionMaker`），`main.ts` 以 `createRouter` 註冊，`legacy_adapter.ts` 把 PoC background 的舊格式訊息（含夾帶的 `model`／`tagMinScore`）轉成新格式。這一步**還不切換 entry**。
 **驗收**
 - [ ] 服務層測試（fake embedder + fake-indexeddb）：索引、內容未變時略過、搜尋、分類增刪改後重新標記
 - [ ] legacy adapter：每種舊格式訊息都有測試，轉換結果通過 validate
