@@ -10,9 +10,10 @@ Scope：XS = 1 檔、S = 1–2 檔、M = 3–5 檔。測試檔與原始碼放在
 ### T1：Build pipeline：PoC → `dist/`，MediaPipe 從 npm 取得
 **說明**：建立 `package.json`（版本全部固定），加入 `@mediapipe/tasks-retrieval@1.2.3` 與 esbuild。`scripts/build.mjs` 先把 PoC 檔案、icons、manifest 原樣複製到 `dist/`，再從 `node_modules` 複製 `retrieval_bundle.mjs` → `dist/lib/`、`wasm/*` → `dist/wasm/`。`scripts/verify-dist.mjs` 檢查 manifest 引用的每個檔案都存在，並輸出各檔案大小。
 **驗收**
-- [ ] `npm ci && npm run build` 產出 `dist/`；`node scripts/verify-dist.mjs` 結果為 exit 0
-- [ ] 刪除根目錄的 `lib/`、`wasm/` 之後，從 `dist/` 載入的擴充功能行為與 v0.5.0 相同
-- [ ] `dist/wasm/*.wasm` 的 SHA-256 與先前 vendored 版本一致
+- [x] `npm ci && npm run build` 產出 `dist/`；`node scripts/verify-dist.mjs` 結果為 exit 0（缺檔案時 exit 1、沒有 dist 時 exit 2，皆已驗證）
+- [ ] 從 `dist/` 載入的擴充功能行為與 v0.5.0 相同（**待人工在 Chrome 驗證，併入 Checkpoint 0**）。build 只從 `node_modules` 讀取 MediaPipe，不依賴根目錄的 `lib/`、`wasm/`
+- [x] `dist/wasm/*.wasm` 與 `dist/lib/retrieval_bundle.mjs` 的 SHA-256 與先前 vendored 版本一致
+- 註：esbuild 延到第一個需要打包的任務（T4）才加入，避免安裝了卻沒用到的相依套件
 **驗證**：手動驗收五項（中文頁索引 → IndexedDB → 中文查詢命中）
 **依賴**：無
 **檔案**：`package.json`、`package-lock.json`、`scripts/build.mjs`、`scripts/verify-dist.mjs`
