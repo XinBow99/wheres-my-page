@@ -3,7 +3,8 @@
  *
  * Checks that every file referenced by the manifest, by HTML pages
  * (script src / link href) and by relative ES module imports exists, plus the
- * MediaPipe wasm files whose path is only built at runtime.
+ * MediaPipe wasm files whose path is only built at runtime. Also checks that
+ * the manifest `key` still yields the fixed extension ID.
  *
  * Exit codes: 0 ok, 1 missing files, 2 the check itself could not run.
  */
@@ -11,6 +12,8 @@
 import {existsSync, readFileSync, readdirSync, statSync} from 'node:fs';
 import {dirname, join, posix, relative} from 'node:path';
 import {fileURLToPath} from 'node:url';
+
+import {EXTENSION_ID, extensionIdFromKey} from './extension-key.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const DIST = join(ROOT, 'dist');
@@ -108,6 +111,16 @@ function main() {
     );
   }
 
+  const id =
+    typeof manifest.key === 'string' ? extensionIdFromKey(manifest.key) : null;
+  const wrongId = id !== EXTENSION_ID;
+  if (wrongId) {
+    console.error(
+      `verify-dist: manifest key gives extension ID ${id ?? '(no key)'}, ` +
+        `expected ${EXTENSION_ID}`,
+    );
+  }
+
   const bytes = f => statSync(join(DIST, f)).size;
   const total = files.reduce((sum, f) => sum + bytes(f), 0);
   const withoutWasm = files
@@ -123,7 +136,8 @@ function main() {
   for (const f of files.filter(f => /\.(js|mjs)$/.test(f))) {
     console.log(`  ${f.padEnd(40)} ${kb(bytes(f))}`);
   }
-  process.exit(missing.length ? 1 : 0);
+  console.log(`verify-dist: extension ID ${id}`);
+  process.exit(missing.length || wrongId ? 1 : 0);
 }
 
 try {

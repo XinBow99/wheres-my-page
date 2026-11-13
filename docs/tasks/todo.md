@@ -1,12 +1,11 @@
 # Tasks: v0.5.0 PoC → 正式架構
 
-## 進度與交接（2026-11-13 下班時）
+## 進度與交接（2026-11-13）
 
-- 分支：`refactor/architecture`（已推送到 `origin`）
-- 已完成：T1（build pipeline）、T2（型別／lint／測試）、T3（架構與 floor 檢查、golden fixtures）
-- **下一步：Checkpoint 0**，需要人工處理：
-  1. `npm ci && npm run build`，在 `chrome://extensions` 以「載入未封裝項目」選擇 `dist/`，走過 `docs/CONSTRAINTS.md` 的手動驗收五項
-  2. **待決定**：從 `dist/` 載入時，unpacked extension ID 是由資料夾路徑決定的，和目前從 repo 根目錄載入的 ID 不同，所以**現有的 IndexedDB 索引在新 ID 下看不到**。提案：在 manifest 加入固定的 `key`，讓之後的 ID 不再變動；現有資料只能一次性匯出／匯入，或接受重建索引。這屬於 manifest 變更，需要你同意
+- 分支：`refactor/architecture`
+- 已完成：T1、T2、T3；另修正 build（Node 22 在含非 ASCII 字元的路徑下，`cpSync` 複製目錄會無聲崩潰）
+- **已決定**：`dist/` 使用固定 extension ID `iogmdngpbdmhfphilnennjocdhclneok`（build 注入 manifest `key`，見 `docs/tasks/plan.md` 決策 6）。repo 根目錄 PoC 的舊索引不搬移，在新 ID 下重建
+- **下一步：Checkpoint 0 的人工驗收**：`npm ci && npm run build`，在 `chrome://extensions` 停用從 repo 根目錄載入的舊版，以「載入未封裝項目」選擇 `dist/`，確認 ID 是 `iogmdngpbdmhfphilnennjocdhclneok`，再走過 `docs/CONSTRAINTS.md` 的手動驗收 1–4 項（第 5 項此時不適用：新 ID 下沒有舊資料）。這次建立的索引要保留，作為 T11／Checkpoint 3 的 v0.5.0 相容資料
 - Checkpoint 0 通過後接著做 T4（`core/text`，第一次引入 esbuild）
 
 計畫與決策見 `docs/tasks/plan.md`。每個任務另外還要通過 `docs/tasks/plan.md`「每個任務的共同驗證」。
@@ -225,7 +224,7 @@ Scope：XS = 1 檔、S = 1–2 檔、M = 3–5 檔。測試檔與原始碼放在
 **Scope**：M
 
 ### T17：manifest：i18n、權限、CSP
-**說明**：`public/_locales/{zh_TW,en}/messages.json`（D3）；manifest 改用 `__MSG_*__`；移除三條 Hugging Face host 規則；評估 CSP `connect-src`（實測模型下載的 redirect 目的地，可以收緊才收緊）。
+**說明**：`public/_locales/{zh_TW,en}/messages.json`（D3）；manifest 改用 `__MSG_*__`，並保留 build 注入的固定 `key`（決策 6）；移除三條 Hugging Face host 規則；評估 CSP `connect-src`（實測模型下載的 redirect 目的地，可以收緊才收緊）。
 **驗收**
 - [ ] Chrome 語言為 zh-TW 時名稱顯示「Where's My Page? 語意回憶」，為 en 時顯示「Where's My Page?」
 - [ ] 移除 host 規則後，模型仍可下載（清空 Cache 後重新下載驗證）

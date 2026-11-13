@@ -20,6 +20,7 @@
 3. **Golden fixtures 取代「對照 PoC 原始碼」**：T3 寫一個腳本，用 PoC 的 `chunk.js`／`store.js`（純 ESM，可在 Node 執行）產出 golden 輸出：中文／英文／emoji 切塊結果、排序結果，以及一份由 PoC `VectorIndex` 寫入 fake-indexeddb 的 v2 資料庫快照。結果以 JSON 存到 `test/fixtures/poc/`。特性測試比對的是這些 fixture，所以 T26 刪掉 PoC 之後測試依然有效。
 4. **介面先行，人工 review 集中在介面上**（AWS 文章）：Phase 2 的契約做完後設一個人工 review checkpoint，之後的實作才以這份契約為準。
 5. **高風險項目提前**：資料相容（T11）排在 offscreen 服務之前；MediaPipe／WebGPU 的行為在 T12 就以真實 Chrome 驗證。
+6. **固定 extension ID**（Checkpoint 0 決定）：build 在 `dist/manifest.json` 注入固定的 `key`（`scripts/extension-key.mjs`，只有 public key），ID 為 `iogmdngpbdmhfphilnennjocdhclneok`，不隨 `dist/` 的路徑或電腦改變；`verify-dist` 檢查 key 推導出的 ID。從 repo 根目錄載入的 PoC 是另一個 ID，那份舊索引不搬移，在新 ID 下重建。Checkpoint 0 用 PoC 原樣的 `dist/` 建立的索引，就是之後 T11／Checkpoint 3 驗證「v0.5.0 舊資料相容」用的真實資料。T17 把 manifest 移到 `public/` 時要保留這個 `key`。
 
 ## 每個任務的共同驗證（Definition of Done）
 

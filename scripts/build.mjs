@@ -6,17 +6,29 @@
  * Later tasks replace PoC files one at a time with esbuild outputs from src/.
  */
 
-import {cpSync, existsSync, mkdirSync, readdirSync, rmSync} from 'node:fs';
+import {
+  cpSync,
+  existsSync,
+  mkdirSync,
+  readFileSync,
+  readdirSync,
+  rmSync,
+  writeFileSync,
+} from 'node:fs';
 import {dirname, join} from 'node:path';
 import {fileURLToPath} from 'node:url';
+
+import {EXTENSION_KEY} from './extension-key.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const DIST = join(ROOT, 'dist');
 const MEDIAPIPE = join(ROOT, 'node_modules', '@mediapipe', 'tasks-retrieval');
 
-/** Frozen PoC files (docs/CONSTRAINTS.md exception W1), copied verbatim. */
+/**
+ * Frozen PoC files (docs/CONSTRAINTS.md exception W1), copied verbatim.
+ * manifest.json is written separately because it gets the fixed `key`.
+ */
 const POC_FILES = [
-  'manifest.json',
   'background.js',
   'chunk.js',
   'content.js',
@@ -75,10 +87,27 @@ function copyDir(from, to) {
   }
 }
 
+/**
+ * Writes the PoC manifest with the fixed `key`, so the unpacked extension
+ * keeps the same ID wherever dist/ is loaded from (scripts/extension-key.mjs).
+ * The root manifest.json is left alone: it is the PoC loaded from the repo
+ * root, whose path-based ID holds the old v0.5.0 index.
+ */
+function writeManifest() {
+  const manifest = JSON.parse(
+    readFileSync(join(ROOT, 'manifest.json'), 'utf8'),
+  );
+  writeFileSync(
+    join(DIST, 'manifest.json'),
+    `${JSON.stringify({...manifest, key: EXTENSION_KEY}, null, 2)}\n`,
+  );
+}
+
 function build() {
   rmSync(DIST, {recursive: true, force: true});
   mkdirSync(DIST, {recursive: true});
 
+  writeManifest();
   for (const file of POC_FILES) {
     copyFile(join(ROOT, file), join(DIST, file));
   }
