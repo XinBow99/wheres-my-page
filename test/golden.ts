@@ -9,6 +9,8 @@
 
 import {readFileSync} from 'node:fs';
 
+import type {DwellContext, DwellEvent} from '../src/core/dwell/state_machine';
+
 /** One corpus entry of text.json with the PoC chunk.js outputs. */
 export interface TextGoldenCase {
   /** Corpus entry name. */
@@ -168,6 +170,23 @@ export interface SharedGolden {
   canonicalUrl: Array<{url: string; out: string}>;
 }
 
+/** One row of dwell.json: PoC transition(ctx, ev). */
+export interface DwellCase {
+  ctx: DwellContext<{id: string}>;
+  ev: DwellEvent<{id: string}>;
+  next: DwellContext<{id: string}>;
+}
+
+/** Contents of dwell.json: PoC content.js state machine. */
+export interface DwellGolden {
+  /** PoC S values in order. */
+  states: string[];
+  /** PoC initial(). */
+  initial: DwellContext<{id: string}>;
+  /** Every state (plus a few variants) × every event. */
+  cases: DwellCase[];
+}
+
 /**
  * Reads and parses one fixture file.
  *
@@ -190,6 +209,9 @@ export const denylistGolden = readFixture('denylist.json') as DenylistGolden;
 
 /** PoC shared constants and canonicalUrl golden outputs. */
 export const sharedGolden = readFixture('shared.json') as SharedGolden;
+
+/** PoC dwell state machine golden table. */
+export const dwellGolden = readFixture('dwell.json') as DwellGolden;
 
 /** PoC VectorIndex golden database and outputs. */
 export const storeGolden = readFixture('store.json') as StoreGolden;

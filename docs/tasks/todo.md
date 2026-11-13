@@ -3,7 +3,7 @@
 ## 進度與交接（2026-11-13）
 
 - 分支：`refactor/architecture`
-- 已完成：T1、T2、T3、T4（T4 的真實 Chrome 驗收待做）、T5、T6（搜尋頁設定的人工確認待做）；另修正 build（Node 22 在含非 ASCII 字元的路徑下，`cpSync` 複製目錄會無聲崩潰）
+- 已完成：T1、T2、T3、T4（T4 的真實 Chrome 驗收待做）、T5、T6（搜尋頁設定的人工確認待做）、T7；另修正 build（Node 22 在含非 ASCII 字元的路徑下，`cpSync` 複製目錄會無聲崩潰）
 - **已決定**：`dist/` 使用固定 extension ID `iogmdngpbdmhfphilnennjocdhclneok`（build 注入 manifest `key`，見 `docs/tasks/plan.md` 決策 6）。repo 根目錄 PoC 的舊索引不搬移，在新 ID 下重建
 - **下一步：Checkpoint 0 的人工驗收**：`npm ci && npm run build`，在 `chrome://extensions` 停用從 repo 根目錄載入的舊版，以「載入未封裝項目」選擇 `dist/`，確認 ID 是 `iogmdngpbdmhfphilnennjocdhclneok`，再走過 `docs/CONSTRAINTS.md` 的手動驗收 1–4 項（第 5 項此時不適用：新 ID 下沒有舊資料）。這次建立的索引要保留，作為 T11／Checkpoint 3 的 v0.5.0 相容資料
 - Checkpoint 0 第 2 項已在使用者的 Chrome 通過（ID `iogm…`，〈人工智慧〉32 chunks、〈珍珠奶茶〉30 chunks）；第 1、3、4 項待使用者回報
@@ -113,8 +113,8 @@ Scope：XS = 1 檔、S = 1–2 檔、M = 3–5 檔。測試檔與原始碼放在
 ### T7：`core/dwell` 停留狀態機
 **說明**：把 PoC `content.js` 的 `transition()` 搬到 `core/dwell/state_machine.ts`，改用 discriminated union 表示 state 與 event。
 **驗收**
-- [ ] 窮舉測試：每個 state × 每個 event 的結果與 PoC 相同（以 golden 表格表示）
-- [ ] 型別層級保證：`switch` 窮舉（`never` 檢查）
+- [x] 窮舉測試：每個 state × 每個 event 的結果與 PoC 相同（以 golden 表格表示；dwell.json 260 列）
+- [x] 型別層級保證：`switch` 窮舉（`never` 檢查）。context 的欄位形狀維持 PoC 原樣（golden 要逐欄相同），event 是 discriminated union，tag 型別以泛型參數保留給 T8 的領域型別
 **驗證**：`npm test -- core/dwell`
 **依賴**：T3
 **檔案**：`src/core/dwell/state_machine.ts` + 測試
