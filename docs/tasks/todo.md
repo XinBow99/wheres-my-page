@@ -2,13 +2,15 @@
 
 ## 進度與交接（2026-11-13）
 
-- 分支：`refactor/architecture`
-- 已完成：T1、T2、T3、T4（T4 的真實 Chrome 驗收待做）、T5、T6（搜尋頁設定的人工確認待做）、T7；另修正 build（Node 22 在含非 ASCII 字元的路徑下，`cpSync` 複製目錄會無聲崩潰）
-- **已決定**：`dist/` 使用固定 extension ID `iogmdngpbdmhfphilnennjocdhclneok`（build 注入 manifest `key`，見 `docs/tasks/plan.md` 決策 6）。repo 根目錄 PoC 的舊索引不搬移，在新 ID 下重建
-- **下一步：Checkpoint 0 的人工驗收**：`npm ci && npm run build`，在 `chrome://extensions` 停用從 repo 根目錄載入的舊版，以「載入未封裝項目」選擇 `dist/`，確認 ID 是 `iogmdngpbdmhfphilnennjocdhclneok`，再走過 `docs/CONSTRAINTS.md` 的手動驗收 1–4 項（第 5 項此時不適用：新 ID 下沒有舊資料）。這次建立的索引要保留，作為 T11／Checkpoint 3 的 v0.5.0 相容資料
-- Checkpoint 0 第 2 項已在使用者的 Chrome 通過（ID `iogm…`，〈人工智慧〉32 chunks、〈珍珠奶茶〉30 chunks）；第 1、3、4 項待使用者回報
-- **需要使用者決定**：MediaPipe 會送使用統計到 `odml.pa.googleapis.com`（PoC 就有，見 `docs/tasks/plan.md` Open Question 3）。依 T5b 的規定，T5b 在真實 Chrome 的實驗先暫停，等這一題決定後再做
-- **T4 待人工驗收**：`dist/chunk.js` 已改由 esbuild 從 `src/legacy/chunk_shim.ts` 產出。需在 `chrome://extensions` 按 `iogm…` 卡片的重新載入（↻），再開一個未索引過的中文頁面，確認徽章出現 ✓ 與合理的 chunk 數
+- 分支：`refactor/architecture`（未推送）
+- 已完成：Phase 0（T1–T3）、Phase 1（T4–T7）。`dist/chunk.js`（T4）與 `dist/shared.js`（T6）已改由 `src/legacy` shim 產出，其餘仍是 PoC 原檔
+- **已決定**：`dist/` 使用固定 extension ID `iogmdngpbdmhfphilnennjocdhclneok`（決策 6）；自動分類改用 `tasks-decision`（決策 7，先做 T5b 實驗）
+- **需要使用者決定**：MediaPipe 會送使用統計到 `odml.pa.googleapis.com`（PoC 就有，見 `docs/tasks/plan.md` Open Question 3，建議選項 A）。T5b 在真實 Chrome 的實驗等這一題決定後再做
+- **待使用者在 Chrome 操作**（Claude in Chrome 無法開啟 `chrome://extensions`，無法自行重新載入擴充功能）：
+  1. 在 `chrome://extensions` 按 `iogm…` 卡片的重新載入（↻），讓 shim 版的 `chunk.js`／`shared.js` 生效
+  2. Checkpoint 0 第 1、3、4 項（第 2 項已通過：〈人工智慧〉32 chunks、〈珍珠奶茶〉30 chunks）
+  3. 重新載入後：開一篇未索引過的中文長文確認 ✓（T4）；搜尋頁改一項設定、儲存、重新整理確認仍在（T6）；中文搜尋命中（Checkpoint 1）
+- 下一步：上面 Chrome 驗收通過即完成 Checkpoint 1，接著 Phase 2（T8 通訊契約）；Phase 2 結束有一次人工 review
 
 計畫與決策見 `docs/tasks/plan.md`。每個任務另外還要通過 `docs/tasks/plan.md`「每個任務的共同驗證」。
 Scope：XS = 1 檔、S = 1–2 檔、M = 3–5 檔。測試檔與原始碼放在同一目錄（`*_test.ts`）。
