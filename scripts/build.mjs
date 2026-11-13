@@ -6,7 +6,7 @@
  * Later tasks replace PoC files one at a time with esbuild outputs from src/.
  */
 
-import {cpSync, existsSync, mkdirSync, rmSync} from 'node:fs';
+import {cpSync, existsSync, mkdirSync, readdirSync, rmSync} from 'node:fs';
 import {dirname, join} from 'node:path';
 import {fileURLToPath} from 'node:url';
 
@@ -56,6 +56,25 @@ function copyFile(from, to) {
   cpSync(from, to);
 }
 
+/**
+ * Copies a directory tree file by file. Recursive cpSync on a directory
+ * crashes Node 22 on Windows without any error when the path contains
+ * non-ASCII characters (e.g. a checkout under 桌面), so it is avoided here.
+ * @param {string} from Absolute source directory.
+ * @param {string} to Absolute destination directory.
+ */
+function copyDir(from, to) {
+  for (const entry of readdirSync(from, {withFileTypes: true})) {
+    const src = join(from, entry.name);
+    const dest = join(to, entry.name);
+    if (entry.isDirectory()) {
+      copyDir(src, dest);
+    } else {
+      copyFile(src, dest);
+    }
+  }
+}
+
 function build() {
   rmSync(DIST, {recursive: true, force: true});
   mkdirSync(DIST, {recursive: true});
@@ -63,7 +82,7 @@ function build() {
   for (const file of POC_FILES) {
     copyFile(join(ROOT, file), join(DIST, file));
   }
-  cpSync(join(ROOT, 'icons'), join(DIST, 'icons'), {recursive: true});
+  copyDir(join(ROOT, 'icons'), join(DIST, 'icons'));
 
   if (!existsSync(MEDIAPIPE)) {
     throw new Error(
